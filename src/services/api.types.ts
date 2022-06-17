@@ -16,6 +16,7 @@ export type TAPINewUser = {
 export type TAPIAuth = {
   user: {
     email: string;
+    roles?: string[];
     username: string;
     bio?: string;
     image?: string;
@@ -36,8 +37,13 @@ export type TAPIUser = {
   user: TUser;
 };
 
+export type TAPIUsers = {
+  users: Array<TUser>,
+};
+
 export type TAPIPatchUserData = {
   email?: string;
+  roles?: string[];
   username?: string;
   bio?: string;
   image?: string;
@@ -103,4 +109,10 @@ export type TAPIErrors = {
 export type TAPIError = {
   errors: TAPIErrors;
   statusCode: number;
+};
+
+export type TAPIResponse = {
+  data: {
+    url: string,
+  }
 };

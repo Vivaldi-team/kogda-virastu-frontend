@@ -14,6 +14,7 @@ import {
   getPrivateFeedThunk,
   getPublicFeedThunk,
   getUserThunk,
+  getAllUsersThunk,
 } from '../thunks';
 import basicThemes, { defaultTheme } from '../themes/index';
 import { closeConfirm, setLanguage } from '../store';
@@ -27,6 +28,7 @@ import Register from '../pages/register';
 import Settings from '../pages/settings';
 import ArticlePage from '../pages/article-page';
 import Editor from '../pages/editor';
+import Admin from '../pages/admin';
 import { Modal } from '../widgets';
 
 import { IGenericVoidHandler } from '../types/widgets.types';
@@ -50,6 +52,7 @@ const App = () => {
     batch(() => {
       dispatch(getAllPostsThunk());
       dispatch(getAllTagsThunk());
+      dispatch(getAllUsersThunk());
     });
     if (jwt.test()) {
       batch(() => {
@@ -83,6 +86,7 @@ const App = () => {
           <Route path='/profile/:username' element={<Profile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/article/:slug' element={<ArticlePage />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

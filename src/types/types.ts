@@ -1,11 +1,14 @@
 export type TUser = {
   email: string;
+  roles?: string[];
   username: string;
   bio?: string;
   image?:string;
   nickname?: string;
   invite?: string;
 };
+
+export type TUsers = Array<TUser>;
 
 // Исправлено и переименовано по модели данных сервера
 export type TProfile = {

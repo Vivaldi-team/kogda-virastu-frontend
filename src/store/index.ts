@@ -5,7 +5,7 @@ import {
   setTags,
   setArticle,
   resetArticle,
-  setImage,
+  setImageURL,
 } from './articleFormSubSlice';
 
 import {
@@ -28,7 +28,7 @@ import {
   setUsernameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
+  setImageURLProfile,
   setNicknameProfile,
   setFormProfile,
   setPasswordProfile,
@@ -46,6 +46,7 @@ import {
   clearAll,
   setAllThemes,
   setAllVocabularies,
+  setAllUsers,
 } from './allSlice';
 
 import { setUser, clearUser } from './userSlice';
@@ -80,6 +81,7 @@ import {
   clearPage,
   setTopFeed,
   clearTopFeed,
+  copyGeneratedInviteCode,
 } from './viewSlice';
 
 import {
@@ -169,6 +171,16 @@ import {
   unfollowTagRequested,
   unfollowTagSucceeded,
   unfollowTagFailed,
+  uploadImageRequested,
+  uploadImageSucceeded,
+  uploadImageFailed,
+  resetUploadImageRes,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 } from './apiSlice';
 
 import {
@@ -211,7 +223,7 @@ export {
   setNicknameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
+  setImageURLProfile,
   setFormProfile,
   setPasswordProfile,
   ConfirmPasswordProfile,
@@ -310,7 +322,7 @@ export {
   onLogin,
   onLogout,
   setArticle,
-  setImage,
+  setImageURL,
   setComment,
   resetComment,
   openMenu,
@@ -342,4 +354,16 @@ export {
   unfollowTagRequested,
   unfollowTagSucceeded,
   unfollowTagFailed,
+  copyGeneratedInviteCode,
+  uploadImageRequested,
+  uploadImageSucceeded,
+  uploadImageFailed,
+  resetUploadImageRes,
+  setAllUsers,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 };

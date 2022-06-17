@@ -3,6 +3,7 @@ import { TUser } from '../types/types';
 
 type TUserState = {
   username: string | null,
+  roles: string[] | null,
   email: string | null,
   bio?: string | null,
   image?: string | null,
@@ -11,6 +12,7 @@ type TUserState = {
 
 const initialState: TUserState = {
   username: null,
+  roles: null,
   email: null,
   bio: null,
   image: null,

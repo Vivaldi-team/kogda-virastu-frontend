@@ -8,7 +8,9 @@ import {
   TAPIProfile,
   TAPITags,
   TAPITag,
-  TAPIUser, TAPIInvite,
+  TAPIUser,
+  TAPIInvite,
+  TAPIUsers,
 } from '../services/api.types';
 
 export interface IRegisterUser {
@@ -27,11 +29,16 @@ export interface IFetchUser {
   () : AxiosPromise<TAPIAuth>;
 }
 
+export interface IFetchUsers {
+  () : AxiosPromise<TAPIUsers>;
+}
+
 export interface IPatchUser {
   ({
-    username, email, password, bio, image, nickname,
+    username, roles, email, password, bio, image, nickname,
   }: {
     username?: string,
+    roles?: string[];
     email?: string,
     password?: string,
     bio?: string,

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { greySecondary } from '../../constants/colors';
+import { greySecondary, mainBgColor, popupMessage } from '../../constants/colors';
 
 type TInputFieldsetProps = {
   rowGap: number;
@@ -66,6 +66,7 @@ export const ContainerInvite = styled.div`
   width: 100%;
   grid-template-columns: 240px 290px;
   align-items: center;
+  position: relative;
   
   @media(max-width: 600px) {
     grid-template-columns: 240px;
@@ -73,7 +74,21 @@ export const ContainerInvite = styled.div`
   }
 `;
 
-export const ButtonsWrapper = styled.div`
+export const MessageCopySuccess = styled.span`
+  position: absolute;
+  top: -30px;
+  left: 30%;
+  color: ${mainBgColor};
+  border-radius: 32px;
+  padding: 4px 16px;
+  background-color: ${popupMessage};
+  font-size: ${({ theme }) => theme.text16Sans.size}px;
+  font-family: ${({ theme }) => theme.text16Sans.family};
+  font-weight: ${({ theme }) => theme.text16Sans.weight};
+  line-height: ${({ theme }) => theme.text16Sans.height}px;
+`;
+
+export const ButtonsWrapper = styled.span`
   display: flex;
   flex-direction: column;
   gap: 24px

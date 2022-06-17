@@ -137,14 +137,15 @@ export type TDividerProps = {
   distance: number;
 };
 
-export type TInputFieldType = 'text' | 'email' | 'password' | 'url';
+export type TInputFieldType = 'text' | 'email' | 'password' | 'url' | 'file' | 'radio' | 'checkbox';
 
 export type TFieldInput = {
-  value: string;
+  value?: string;
   placeholder?: string;
   error?: boolean;
   disabled?: boolean;
   errorText?: string;
+  accept?: string;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;

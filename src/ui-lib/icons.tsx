@@ -20,7 +20,7 @@ import { ReactComponent as CrossPic } from '../assets/images/icons/cross-icon.sv
 import { ReactComponent as EyePic } from '../assets/images/icons/eye-icon.svg';
 import { ReactComponent as EyeNoPic } from '../assets/images/icons/eyeNo-icon.svg';
 
-import { getAvatarBorderProp, testImageUrl } from '../services/helpers';
+import { getAvatarBorderProp } from '../services/helpers';
 import { blue, greySecondary } from '../constants/colors';
 
 type TAvatarSize = {
@@ -100,6 +100,7 @@ const BasicAvatar = styled.img<IBasicAvatar>`
   border-width: ${({ bordered, borderProps: { width } }) => getAvatarBorderProp(bordered, width)}px;
   border-color: ${({ bordered, borderProps: { color } }) => getAvatarBorderProp(bordered, color)};
   border-style: ${({ bordered, borderProps: { style } }) => getAvatarBorderProp(bordered, style)};
+  align-self: center;
 `;
 
 export const AvatarIcon : FC<TAvatarIconProps> = ({
@@ -114,7 +115,7 @@ export const AvatarIcon : FC<TAvatarIconProps> = ({
     color: blue,
     style: 'solid',
   };
-  if ((!image) || (!!image && !testImageUrl(image))) {
+  if ((!image)) {
     return (
       <DefaultAvatar
         width={`${avatarSize[size].width}px`}

@@ -14,6 +14,7 @@ const shadowGrey = '#B8B8B8';
 const grey = '#A3A3A3';
 const paleGrey = '#F5F5F5';
 const redAccess = '#FF1E1E';
+const popupMessage = 'rgba(10, 10, 11, 0.9)';
 export {
   primaryBlack,
   greySecondary,
@@ -31,4 +32,5 @@ export {
   grey,
   paleGrey,
   redAccess,
+  popupMessage,
 };

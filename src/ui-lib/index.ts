@@ -37,6 +37,7 @@ import {
   MenuNewPostButton,
   MenuSettingsButton,
   MenuLogoutButton,
+  MenuAdminButton,
 } from './buttons';
 
 import {
@@ -131,4 +132,5 @@ export {
   MenuLogoutButton,
   FieldTextComment,
   FieldInviteCode,
+  MenuAdminButton,
 };
