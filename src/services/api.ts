@@ -458,4 +458,3 @@ export const patchUserRoles : IPatchUser = (user: TAPIPatchUserData) : AxiosProm
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
-

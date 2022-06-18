@@ -33,7 +33,12 @@ const HeaderMenuWrapper = styled.nav`
 const HeaderMenuWidget : FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { roles, nickname, username, image } = useSelector((store) => store.profile);
+  const {
+    roles,
+    nickname,
+    username,
+    image,
+  } = useSelector((store) => store.profile);
   const { isLoggedIn } = useSelector((state) => state.system);
   const onProfileClick : MouseEventHandler<HTMLButtonElement> = () => navigate(`/profile/${username || ''}`);
   const onUpdateProfileClick : MouseEventHandler<HTMLButtonElement> = () => navigate('/settings');
