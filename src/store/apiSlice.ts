@@ -20,7 +20,9 @@ type TAPIState = {
   isArticlePatching: boolean,
   isArticlePatchingSucceeded: boolean,
   isLikeArticlePosting: boolean,
-  isLikeArticleDeleting: boolean,
+  isLikeArticleDecline: boolean,
+  isArticlePublish: boolean,
+  isArticleDeclining: boolean,
   isTagsFetching: boolean,
   isCommentsFetching: boolean,
   isCommentPosting: boolean,
@@ -57,7 +59,9 @@ const initialState : TAPIState = {
   isArticlePatching: false,
   isArticlePatchingSucceeded: false,
   isLikeArticlePosting: false,
-  isLikeArticleDeleting: false,
+  isLikeArticleDecline: false,
+  isArticlePublish: false,
+  isArticleDeclining: false,
   isTagsFetching: false,
   isCommentsFetching: false,
   isCommentPosting: false,
@@ -244,6 +248,24 @@ const apiSlice = createSlice({
     likeArticleDeleteFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isLikeArticleDeleting: false, errorObject: action.payload,
     }),
+    publishArticlePostRequested: (state) => ({
+      ...state, isArticlePublish: true,
+    }),
+    publishArticlePostSucceeded: (state) => ({
+      ...state, isArticlePublish: false,
+    }),
+    publishArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticlePublish: false, errorObject: action.payload,
+    }),
+    declineArticlePostRequested: (state) => ({
+      ...state, isLikeArticleDecline: true,
+    }),
+    declineArticlePostSucceeded: (state) => ({
+      ...state, isLikeArticleDecline: false,
+    }),
+    declineArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isLikeArticleDecline: false, errorObject: action.payload,
+    }),
     tagsFetchRequested: (state) => ({
       ...state, isTagsFetching: true,
     }),
@@ -411,6 +433,12 @@ export const {
   likeArticleDeleteRequested,
   likeArticleDeleteSucceeded,
   likeArticleDeleteFailed,
+  publishArticlePostRequested,
+  publishArticlePostSucceeded,
+  publishArticlePostFailed,
+  declineArticlePostRequested,
+  declineArticlePostSucceeded,
+  declineArticlePostFailed,
   tagsFetchRequested,
   tagsFetchSucceeded,
   tagsFetchFailed,

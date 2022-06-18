@@ -50,6 +50,9 @@ const en: TVocabulary = {
   mySubscriptions: 'My subscriptions',
   zeroSubscriptions: 'You are not subscribed to anyone',
   copyText: 'Click to copy the code or link',
+  onModeration: 'On moderation',
+  moderationPublish: 'Publish',
+  moderationDecline: 'Decline',
 };
 
 export default en;

@@ -19,6 +19,7 @@ export type TCommentAuthorHeadingProps = {
   date: Date;
   isAuthor: boolean;
   onDeleteClick?: React.MouseEventHandler<SVGSVGElement>;
+  itIsAdmin: boolean;
 };
 
 export type TBriefPostAnnounceProps = {
@@ -69,4 +70,5 @@ export type TCommentProps = {
   isAuthor: boolean,
   body: string,
   commentId: string,
+  itIsAdmin: boolean,
 };
