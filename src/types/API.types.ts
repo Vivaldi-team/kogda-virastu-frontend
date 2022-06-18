@@ -8,7 +8,8 @@ import {
   TAPIProfile,
   TAPITags,
   TAPITag,
-  TAPIUser, TAPIInvite,
+  TAPIUser,
+  TAPIInvite,
 } from '../services/api.types';
 
 export interface IRegisterUser {

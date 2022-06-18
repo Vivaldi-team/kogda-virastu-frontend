@@ -9,6 +9,7 @@ import {
   FEED_ROUTE, JWT,
   PROFILES_ROUTE,
   TAGS_ROUTE,
+  UPLOAD,
 } from '../constants';
 import {
   TAPINewUser,
@@ -415,9 +416,20 @@ export const unfollowTag : ITag = (tag: string) : AxiosPromise<TAPITag> => {
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
+
 export const fetchInviteCode: IFetchInvite = () : AxiosPromise<TAPIInvite> => {
   const requestConfig: AxiosRequestConfig = {
     url: `${USER_ROUTE}/invites/new`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
+export const uploadImage = (file: FormData) => {
+  const requestConfig : AxiosRequestConfig = {
+    headers: { 'content-type': 'multipart/form-data' },
+    url: UPLOAD,
+    data: file,
     method: 'post',
   };
   return blogAPI(injectBearerToken(requestConfig));

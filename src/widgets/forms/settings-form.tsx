@@ -14,14 +14,18 @@ import {
   setUsernameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
   setNicknameProfile,
   setFormProfile,
   setPasswordProfile,
   ConfirmPasswordProfile,
+  copyGeneratedInviteCode,
 } from '../../store';
 
-import { patchCurrentUserThunk, getInviteCodeThunk } from '../../thunks';
+import {
+  patchCurrentUserThunk,
+  getInviteCodeThunk,
+  uploadImageThunk,
+} from '../../thunks';
 
 import {
   ButtonContainer, ContainerInvite,
@@ -29,7 +33,7 @@ import {
   FormContainer,
   FormTitle,
   InputFieldset,
-  LinkStyle,
+  LinkStyle, MessageCopySuccess,
 } from './forms-styles';
 
 import {
@@ -49,14 +53,14 @@ import { greySecondary } from '../../constants/colors';
 
 const SettingsForm: FC = () => {
   const {
-    bio, email, image, username, password, nickname, confirmpassword,
+    bio, email, username, password, nickname, confirmpassword,
   } = useSelector((state) => state.forms.profile);
 
   const profile = useSelector((state) => state.profile);
 
   const { isSettingsPatching, isSettingsUpdateSucceeded } = useSelector((state) => state.api);
 
-  const { generatedCode } = useSelector((state) => state.view);
+  const { generatedCode, copyGeneratedCode } = useSelector((state) => state.view);
 
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -89,7 +93,11 @@ const SettingsForm: FC = () => {
   };
 
   const changeImage : ChangeEventHandler<HTMLInputElement> = (evt) => {
-    dispatch(setImageProfile(evt.target.value));
+    if (evt.target.files) {
+      const formData = new FormData();
+      formData.append('file', evt.target.files[0]);
+      dispatch(uploadImageThunk(formData, 'profile'));
+    }
   };
 
   const changeUsername : ChangeEventHandler<HTMLInputElement> = (evt) => {
@@ -112,10 +120,12 @@ const SettingsForm: FC = () => {
   const changePassword : ChangeEventHandler<HTMLInputElement> = (evt) => {
     dispatch(setPasswordProfile(evt.target.value));
   };
-
   const copyToClipBoard = (e: MouseEvent<HTMLElement>, text: string) => {
     e.preventDefault();
-    navigator.clipboard.writeText(text).then((r) => r).catch((evt: string) => evt);
+    navigator.clipboard.writeText(text)
+      .then(() => setTimeout(() => dispatch(copyGeneratedInviteCode()), 2000))
+      .finally(() => dispatch(copyGeneratedInviteCode()))
+      .catch((evt: string) => evt);
   };
 
   return (
@@ -125,7 +135,7 @@ const SettingsForm: FC = () => {
       </FormTitle>
       <Form onSubmit={submitForm}>
         <InputFieldset rowGap={16}>
-          <FieldProfileImage value={image ?? ''} onChange={changeImage} />
+          <FieldProfileImage onChange={changeImage} />
           <FieldLogin value={username ?? ''} onChange={changeUsername} />
           <FieldNick value={nickname ?? ''} onChange={changeNickname} />
           <FieldAboutUser
@@ -139,12 +149,21 @@ const SettingsForm: FC = () => {
         <ContainerInvite>
           <GenerateInviteCodeButton onClick={() => dispatch(getInviteCodeThunk())} />
           {generatedCode ? (
-            <LinkStyle
-              onClick={(e: MouseEvent<HTMLElement>) => copyToClipBoard(e, `http://localhost:4100/registration?=${generatedCode}`)}
-              to={`/registration?=${generatedCode}`}
-              color={greySecondary}>
-              <FormattedMessage id='copyText' />
-            </LinkStyle>
+            <>
+              {copyGeneratedCode
+                ? (
+                  <MessageCopySuccess>
+                    <FormattedMessage id='copyTextSuccess' />
+                  </MessageCopySuccess>
+                )
+                : null}
+              <LinkStyle
+                onClick={(e: MouseEvent<HTMLElement>) => copyToClipBoard(e, `${window.location.origin}/registration?=${generatedCode}`)}
+                to={`/registration?=${generatedCode}`}
+                color={greySecondary}>
+                <FormattedMessage id='copyText' />
+              </LinkStyle>
+            </>
           )
             : null}
         </ContainerInvite>

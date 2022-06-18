@@ -5,7 +5,6 @@ import { PaperClipIcon, EyeIcon, EyeNoIcon } from '../icons';
 import { TFieldInput } from '../../types/styles.types';
 
 export const FieldUrl: FC<TFieldInput> = ({
-  value,
   onFocus = undefined,
   onBlur = undefined,
   onChange,
@@ -19,20 +18,19 @@ export const FieldUrl: FC<TFieldInput> = ({
     <InputField
       placeholder={placeholder}
       name='FieldURL'
-      type='url'
+      type='file'
       errorText={errorText}
       error={error}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={value}
       onChange={onChange}
       labelText={intl.messages.articleImage as string}
       icon={<PaperClipIcon color='grey' />}
-      disabled={disabled} />
+      disabled={disabled}
+      accept='image/*' />
   );
 };
 export const FieldProfileImage: FC<TFieldInput> = ({
-  value,
   onFocus = undefined,
   onBlur = undefined,
   onChange,
@@ -46,18 +44,19 @@ export const FieldProfileImage: FC<TFieldInput> = ({
     <InputField
       placeholder={placeholder}
       name='FieldProfileImage'
-      type='url'
+      type='file'
       errorText={errorText}
       error={error}
       onBlur={onBlur}
       onFocus={onFocus}
-      value={value}
       onChange={onChange}
-      labelText={intl.messages.urlImage as string}
+      labelText={intl.messages.profileImage as string}
       icon={<PaperClipIcon color='grey' />}
-      disabled={disabled} />
+      disabled={disabled}
+      accept='image/*' />
   );
 };
+
 export const FieldLogin: FC<TFieldInput> = ({
   value,
   onFocus = undefined,

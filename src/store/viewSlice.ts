@@ -29,6 +29,7 @@ type TViewState = {
   articlesType: UserArticlesTypes;
   topFeed: TArticles | null;
   generatedCode: string | null;
+  copyGeneratedCode: boolean;
 };
 
 const initialState: TViewState = {
@@ -49,6 +50,7 @@ const initialState: TViewState = {
   articlesType: UserArticlesTypes.my,
   topFeed: null,
   generatedCode: null,
+  copyGeneratedCode: false,
 };
 
 const viewSlice = createSlice({
@@ -139,6 +141,9 @@ const viewSlice = createSlice({
     setGeneratedInviteCode: (state, action: PayloadAction<string>) => ({
       ...state, generatedCode: action.payload,
     }),
+    copyGeneratedInviteCode: (state) => ({
+      ...state, copyGeneratedCode: !state.copyGeneratedCode,
+    }),
   },
 });
 
@@ -171,6 +176,7 @@ export const {
   setTopFeed,
   clearTopFeed,
   setGeneratedInviteCode,
+  copyGeneratedInviteCode,
 } = viewSlice.actions;
 const viewReducer = viewSlice.reducer;
 export default viewReducer;

@@ -8,6 +8,8 @@ import {
   TAGS_ROUTE,
   PROFILES_ROUTE,
   JWT,
+  UPLOAD,
+  IMAGES_ROUTE,
 } from './api.constants';
 
 import {
@@ -30,6 +32,8 @@ export {
   TAGS_ROUTE,
   PROFILES_ROUTE,
   JWT,
+  UPLOAD,
+  IMAGES_ROUTE,
   mobileBreakpoint,
   tabletBreakpoint,
   desktopBreakpoint,
