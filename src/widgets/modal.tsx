@@ -10,7 +10,7 @@ import {
 } from '../ui-lib';
 
 import { mobileBreakpoint, mobileViewModal } from '../constants';
-import { TModalProps } from '../types/widgets.types';
+import { TModalProps, TModalOverlayProps } from '../types/widgets.types';
 
 const modalStepWidth = (600 - 280) / (mobileViewModal - mobileBreakpoint);
 const modalStepHeight = (320 - 342) / (mobileViewModal - mobileBreakpoint);
@@ -61,9 +61,8 @@ const ModalDialog = styled.div`
   }
 `;
 
-const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
+export const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
   const theme = useTheme();
-  const portalRoot = useMemo(() => document.getElementById('modal'), []) as Element;
   useEffect(() => {
     const handleEscClose = (evt: KeyboardEvent) : void => {
       if (evt.key && evt.key === 'Escape') {
@@ -74,31 +73,36 @@ const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     };
-  }, [onClose, portalRoot]);
+  }, [onClose]);
+  const onCloseClick : MouseEventHandler = () => onClose();
+
+  return (
+    <ModalDialog>
+      <CloseButton onClick={onCloseClick}><CrossIcon color={theme.primaryText} /></CloseButton>
+      <HeaderTwoText color={theme.modalCaption} marginCSS='margin-top: 56px;'>
+        <FormattedMessage id='deleteArticle' />
+      </HeaderTwoText>
+      <RegularText
+        size='large'
+        weight={400}
+        sansSerif
+        color={theme.modalText}
+        marginCSS='margin: 36px 0;'
+        paddingCSS='max-width: 400px;'>
+        <FormattedMessage id='deletepopuptext' />
+      </RegularText>
+      <ConfirmDeleteButton onClick={onSubmit} />
+    </ModalDialog>
+  );
+};
+
+export const ModalOverlayPortal : FC<TModalOverlayProps> = ({ children, onClose }) => {
+  const portalRoot = useMemo(() => document.getElementById('modal'), []) as Element;
   const onCloseClick : MouseEventHandler = () => onClose();
 
   return ReactDOM.createPortal(
     (
-      <ModalOverlay onClick={onCloseClick}>
-        <ModalDialog>
-          <CloseButton onClick={onCloseClick}><CrossIcon color={theme.primaryText} /></CloseButton>
-          <HeaderTwoText color={theme.modalCaption} marginCSS='margin-top: 56px;'>
-            <FormattedMessage id='deleteArticle' />
-          </HeaderTwoText>
-          <RegularText
-            size='large'
-            weight={400}
-            sansSerif
-            color={theme.modalText}
-            marginCSS='margin: 36px 0;'
-            paddingCSS='max-width: 400px;'>
-            <FormattedMessage id='deletepopuptext' />
-          </RegularText>
-          <ConfirmDeleteButton onClick={onSubmit} />
-        </ModalDialog>
-      </ModalOverlay>
+      <ModalOverlay onClick={onCloseClick}>{children}</ModalOverlay>
     ), portalRoot,
   );
 };
-
-export default Modal;

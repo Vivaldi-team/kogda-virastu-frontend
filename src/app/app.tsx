@@ -29,7 +29,7 @@ import Settings from '../pages/settings';
 import ArticlePage from '../pages/article-page';
 import Editor from '../pages/editor';
 import Admin from '../pages/admin';
-import { Modal } from '../widgets';
+import { Modal, ModalOverlayPortal } from '../widgets';
 
 import { IGenericVoidHandler } from '../types/widgets.types';
 
@@ -90,7 +90,14 @@ const App = () => {
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
-        {isDeleteConfirmOpen && <Modal onClose={onConfirmClose} onSubmit={onConfirmDelete} />}
+        {
+          isDeleteConfirmOpen
+          && (
+          <ModalOverlayPortal onClose={onConfirmClose}>
+            <Modal onClose={onConfirmClose} onSubmit={onConfirmDelete} />
+          </ModalOverlayPortal>
+          )
+        }
       </ThemeProvider>
     </IntlProvider>
   );
