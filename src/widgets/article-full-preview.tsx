@@ -160,7 +160,6 @@ type TArticleFullPreview = {
 const ArticleFullPreview: FC<TArticleFullPreview> = ({
   article, onLikeClick, declineArticle, publishArticle, isModeration = false,
 }) => (
-
   <ArticleCardContainer>
     <AuthorHeadingWidget
       username={article.author?.username}
@@ -186,8 +185,8 @@ const ArticleFullPreview: FC<TArticleFullPreview> = ({
     </ContentContainer>
     {isModeration && (
       <ArticleActionsContainer>
-        <PublishArticle onClick={() => publishArticle} />
-        <DeclineArticle onClick={() => declineArticle} />
+        <PublishArticle onClick={publishArticle} />
+        <DeclineArticle onClick={declineArticle} />
       </ArticleActionsContainer>
     )}
   </ArticleCardContainer>
