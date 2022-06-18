@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect,
+  FC,
 } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import styled from 'styled-components';
@@ -28,7 +28,10 @@ const ListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width:719px) {
+    width: 500px;
+  }
+  @media screen and (max-width: 420px) {
     width: 320px;
   }
 `;
@@ -46,22 +49,24 @@ const UserContainer = styled.div`
     width: 720px;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     border-bottom: solid 1px #cccccc;
     padding-top: 8px;
     padding-bottom: 8px;
-    word-break:break-all;
-    text-overflow: ellipsis;
     @media screen and (max-width:719px) {
         width: 500px;
     }
 
-     @media screen and (max-width: 320px) {
+     @media screen and (max-width: 420px) {
          width:320px;
          flex-direction: column;
      }
 
+`;
+
+const User = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 const AdminPanel: FC = () => {
@@ -79,18 +84,20 @@ const AdminPanel: FC = () => {
         {
           users?.map((user) => (
             <UserContainer key={nanoid(10)}>
-              <AvatarIcon name={user.username ?? ''} image={user.image} size='small' distance={0} color='' />
+              <User>
+                <AvatarIcon name={user.username ?? ''} image={user.image} size='small' distance={0} color='' />
+                <RegularText size='medium' weight={400}>
+                  {user.username}
+                </RegularText>
+              </User>
               <RegularText size='medium' weight={400}>
-                {user.username}
-              </RegularText>
-              <RegularText size='medium' weight={400}>
-                {user.roles?.includes('admin') ? 'Администратор' : 'Пользователь'}
+                {user.roles?.includes('admin') ? 'Админ' : 'Пользователь'}
               </RegularText>
               <InputCheckbox
-                checked={user.roles?.includes('admin') ? true : false}
+                checked={user.roles?.includes('admin')}
                 type='checkbox'
-                name='Cделать администратором'
-                labelText='Cделать администратором'
+                name='Cделать админом'
+                labelText='Cделать админом'
                 onChange={() => onChange(user.username, user.roles?.includes('admin') ? ['user'] : ['user', 'admin'])} />
             </UserContainer>
           ))

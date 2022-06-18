@@ -4,8 +4,8 @@ import { fetchAllUsers } from '../services/api';
 import {
   allUsersRequested,
   allUsersRequestSucceeded,
-  allUsersRequestFailed, 
-  setAllUsers, 
+  allUsersRequestFailed,
+  setAllUsers,
 } from '../store';
 import { AppThunk } from '../store/store.types';
 import { makeErrorObject } from '../services/helpers';

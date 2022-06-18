@@ -8,6 +8,11 @@ import { TInputFieldType } from '../../types/styles.types';
 const InputStyle = styled.input<{ error: boolean }>`
 height: 20px;
 width: 20px;
+margin-right: 8px;
+
+&:checked {
+  accent-color: #62626a;
+} 
  `;
 
 const ContainerInput = styled.div`
@@ -27,7 +32,7 @@ const ContainerInput = styled.div`
 interface IInputCheckboxInterface {
   type: TInputFieldType;
   name: string;
-  checked: boolean;
+  checked: boolean | undefined;
   labelText: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
