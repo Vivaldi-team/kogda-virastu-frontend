@@ -5,6 +5,7 @@ const en: TVocabulary = {
   userLogin: 'Login',
   newArticle: 'New post',
   settings: 'Settings',
+  admin: 'Admin',
   exitProfile: 'Exit',
   mainTitle: 'When I grow up',
   mainSubtitle: 'What it’s like to be a junior in a turbulent world',

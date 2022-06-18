@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TAPIError, TAPIResponse } from '../services/api.types';
+import { TAPIError, TAPIResponse  } from '../services/api.types';
 
 type TAPIState = {
   successMessage: string | null,
@@ -40,6 +40,8 @@ type TAPIState = {
   isGenerateInviteCodeFetching: boolean,
   isUploadImageFetching: boolean,
   uploadImageRes: TAPIResponse | null,
+  isAllUsersFetching: boolean,
+  isUserRolesChange: boolean,
 };
 
 const initialState : TAPIState = {
@@ -81,6 +83,8 @@ const initialState : TAPIState = {
   isGenerateInviteCodeFetching: false,
   isUploadImageFetching: false,
   uploadImageRes: null,
+  isAllUsersFetching: false,
+  isUserRolesChange: false,
 };
 
 const apiSlice = createSlice({
@@ -402,6 +406,24 @@ const apiSlice = createSlice({
     uploadImageFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isUploadImageFetching: false, errorObject: action.payload,
     }),
+    allUsersRequested: (state) => ({
+      ...state, isAllUsersFetching: true,
+    }),
+    allUsersRequestSucceeded: (state) => ({
+      ...state, isAllUsersFetching: false,
+    }),
+    allUsersRequestFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isAllUsersFetching: false, errorObject: action.payload,
+    }),
+    userRolesPatchRequested: (state) => ({
+      ...state, isUserRolesChange: true,
+    }),
+    userRolesPatchSucceeded: (state) => ({
+      ...state, isUserRolesChange: false,
+    }),
+    userRolesPatchFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isUserRolesChange: false, errorObject: action.payload,
+    }),
   },
 });
 
@@ -506,5 +528,11 @@ export const {
   uploadImageSucceeded,
   uploadImageFailed,
   resetUploadImageRes,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 } = apiSlice.actions;
 export default apiReducer;

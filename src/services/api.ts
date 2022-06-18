@@ -10,6 +10,7 @@ import {
   PROFILES_ROUTE,
   TAGS_ROUTE,
   UPLOAD,
+  ADMIN_ROUTE,
 } from '../constants';
 import {
   TAPINewUser,
@@ -25,6 +26,7 @@ import {
   TAPIProfile,
   TAPIAuth,
   TAPIPatchUserData, TAPIPatchArticleData, TAPIInvite,
+  TAPIUsers,
 } from './api.types';
 import {
   IDeleteArticle,
@@ -43,6 +45,7 @@ import {
   IRegisterUser,
   ITag,
   IFetchInvite,
+  IFetchUsers,
 } from '../types/API.types';
 
 const defaultRequestConfig : AxiosRequestConfig = {
@@ -183,11 +186,14 @@ export const patchCurrentUser : IPatchUser = (
 ) : AxiosPromise<TAPIAuth> => {
   const makePatchData = (data : TAPIPatchUserData) : TAPIPatchUserData => {
     const {
-      username, email, password, bio, image, nickname,
+      username, roles, email, password, bio, image, nickname,
     } = data;
     let res = {};
     if (username) {
       res = { ...res, username };
+    }
+    if (roles) {
+      res = { ...res, roles };
     }
     if (email) {
       res = { ...res, email };
@@ -434,3 +440,22 @@ export const uploadImage = (file: FormData) => {
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
+
+export const fetchAllUsers : IFetchUsers = () : AxiosPromise<TAPIUsers> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `${ADMIN_ROUTE}/users`,
+    method: 'get',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
+export const patchUserRoles : IPatchUser = (user: TAPIPatchUserData) : AxiosPromise<TAPIAuth> => {
+  const { username, roles } = user;
+  const requestConfig : AxiosRequestConfig = {
+    url: `${ADMIN_ROUTE}/users/${username}/roles`,
+    method: 'patch',
+    data: { roles },
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+

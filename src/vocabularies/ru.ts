@@ -5,6 +5,7 @@ const ru: TVocabulary = {
   userLogin: 'Войти',
   newArticle: 'Новая запись',
   settings: 'Настройки',
+  admin: 'Админка',
   exitProfile: 'Выйти',
   mainTitle: 'Когда вырасту',
   mainSubtitle: 'Каково быть джуном  в турбулентном мире',

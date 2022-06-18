@@ -24,6 +24,8 @@ import followTagThunk from './follow-tag-thunk';
 import unfollowTagThunk from './unfollow-tag-thunk';
 import getFollowTagsThunk from './get-follow-tags-thunk';
 import getInviteCodeThunk from './get-inviteCode-thunk';
+import getAllUsersThunk from './get-all-users-thunk';
+import patchUserRolesThunk from './patch-user-roles-thunk';
 import publishArticleThunk from './publish-article-thunk';
 import uploadImageThunk from './upload-image-thunk';
 
@@ -54,6 +56,8 @@ export {
   unfollowTagThunk,
   getFollowTagsThunk,
   getInviteCodeThunk,
-  publishArticleThunk,
   uploadImageThunk,
+  getAllUsersThunk,
+  patchUserRolesThunk,
+  publishArticleThunk,
 };

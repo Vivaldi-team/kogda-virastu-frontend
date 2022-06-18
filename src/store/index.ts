@@ -46,6 +46,7 @@ import {
   clearAll,
   setAllThemes,
   setAllVocabularies,
+  setAllUsers,
 } from './allSlice';
 
 import { setUser, clearUser } from './userSlice';
@@ -180,6 +181,12 @@ import {
   uploadImageSucceeded,
   uploadImageFailed,
   resetUploadImageRes,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 } from './apiSlice';
 
 import {
@@ -364,4 +371,11 @@ export {
   uploadImageSucceeded,
   uploadImageFailed,
   resetUploadImageRes,
+  setAllUsers,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 };
