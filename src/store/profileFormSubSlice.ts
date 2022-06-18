@@ -37,7 +37,7 @@ const profileSubSlice = createSlice({
     setBioProfile: (state, action: PayloadAction<string>) => ({
       ...state, bio: action.payload,
     }),
-    setImageProfile: (state, action: PayloadAction<string>) => ({
+    setImageURLProfile: (state, action: PayloadAction<string>) => ({
       ...state, image: action.payload,
     }),
     setPasswordProfile: (state, action: PayloadAction<string>) => ({
@@ -61,7 +61,7 @@ export const {
   setNicknameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
+  setImageURLProfile,
   setPasswordProfile,
   ConfirmPasswordProfile,
   setFormProfile,

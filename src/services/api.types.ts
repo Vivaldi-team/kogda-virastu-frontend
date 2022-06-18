@@ -104,3 +104,9 @@ export type TAPIError = {
   errors: TAPIErrors;
   statusCode: number;
 };
+
+export type TAPIResponse = {
+  data: {
+    url: string,
+  }
+};

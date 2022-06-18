@@ -1,3 +1,4 @@
+import { array, string } from 'prop-types';
 import {
   ChangeEventHandler, FocusEventHandler, MouseEventHandler,
 } from 'react';
@@ -80,7 +81,7 @@ export type TAvatarSizes = 'large' | 'small';
 export type TAvatarIconProps = {
   size: TAvatarSizes;
   name: string;
-  image: string;
+  image: string | null;
   distance?: number;
   color?: string;
 } | {
@@ -137,14 +138,15 @@ export type TDividerProps = {
   distance: number;
 };
 
-export type TInputFieldType = 'text' | 'email' | 'password' | 'url';
+export type TInputFieldType = 'text' | 'email' | 'password' | 'url' | 'file';
 
 export type TFieldInput = {
-  value: string;
+  value?: string;
   placeholder?: string;
   error?: boolean;
   disabled?: boolean;
   errorText?: string;
+  accept?: string;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;

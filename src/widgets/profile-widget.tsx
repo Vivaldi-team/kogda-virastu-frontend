@@ -9,7 +9,6 @@ import {
   unfollowProfileThunk,
   followProfileThunk,
 } from '../thunks';
-import ProfileFeed from './profile-feed';
 
 type TProfileWidget = {
   userName: string | undefined,

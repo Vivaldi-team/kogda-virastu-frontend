@@ -25,6 +25,7 @@ import unfollowTagThunk from './unfollow-tag-thunk';
 import getFollowTagsThunk from './get-follow-tags-thunk';
 import getInviteCodeThunk from './get-inviteCode-thunk';
 import publishArticleThunk from './publish-article-thunk';
+import uploadImageThunk from './upload-image';
 
 export {
   createCommentThunk,
@@ -54,4 +55,5 @@ export {
   getFollowTagsThunk,
   getInviteCodeThunk,
   publishArticleThunk,
+  uploadImageThunk,
 };
