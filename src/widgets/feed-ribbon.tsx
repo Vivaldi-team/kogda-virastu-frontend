@@ -7,9 +7,8 @@ import ScrollRibbon from './scroll-ribbon';
 import ArticleFullPreview from './article-full-preview';
 import { addLikeThunk, deleteLikeThunk, publishArticleThunk } from '../thunks';
 import { blue, greySecondary, primaryBlack } from '../constants/colors';
-import { TArticle } from '../types/types';
 import declineArticleThunk from '../thunks/decline-article-thunk';
-import { TCompare } from '../types/types';
+import { TCompare, TArticle } from '../types/types';
 
 const RibbonWrapper = styled.ul`
   width: 100%;
