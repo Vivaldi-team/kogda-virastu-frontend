@@ -32,6 +32,7 @@ export type TArticle = {
   title: string;
   updatedAt: string;
   privatePosts?: string;
+  state?: string;
 };
 
 export type TArticleCore = Omit<TArticle,

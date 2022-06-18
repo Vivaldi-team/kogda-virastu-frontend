@@ -314,6 +314,22 @@ export const deleteLikeArticle : ILikeArticle = (slug: string) : AxiosPromise<TA
   return blogAPI(injectBearerToken(requestConfig));
 };
 
+export const publishArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIArticle> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `/admin${ARTICLES_ROUTE}/${slug}/publish`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
+export const declineArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIArticle> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `/admin${ARTICLES_ROUTE}/${slug}/decline`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
 export const fetchTags : IFetchTags = () : AxiosPromise<TAPITags> => {
   const requestConfig : AxiosRequestConfig = {
     url: TAGS_ROUTE,

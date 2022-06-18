@@ -8,6 +8,7 @@ import AuthorHeadingWidget from './author-heading-widget';
 import { TArticle } from '../types/types';
 import BarTags from './bar-tags';
 import { getPropOnCondition } from '../services/helpers';
+import { DeclineArticle, PublishArticle } from '../ui-lib/buttons';
 
 const ArticleCardContainer = styled.div`
     max-width: 700px;
@@ -109,6 +110,18 @@ const ArticleImage = styled.img`
     }
 `;
 
+const ArticleActionsContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 32px;
+  @media screen and (max-width: 320px) {
+    width: 262px;
+    flex-flow: row nowrap;
+    gap: 14px;
+  }
+  }
+`;
+
 const Article = styled.article<TElementWithImage>`
 font-size: ${({ theme: { text18Sans: { size } } }) => `${size}px`};
 font-family: ${({ theme: { text18Sans: { family } } }) => family};
@@ -139,9 +152,14 @@ box-orient: vertical;
 type TArticleFullPreview = {
   article: TArticle,
   onLikeClick: MouseEventHandler,
+  declineArticle: MouseEventHandler,
+  publishArticle: MouseEventHandler,
+  isModeration: boolean,
 };
 
-const ArticleFullPreview: FC<TArticleFullPreview> = ({ article, onLikeClick }) => (
+const ArticleFullPreview: FC<TArticleFullPreview> = ({
+  article, onLikeClick, declineArticle, publishArticle, isModeration = false,
+}) => (
 
   <ArticleCardContainer>
     <AuthorHeadingWidget
@@ -166,6 +184,12 @@ const ArticleFullPreview: FC<TArticleFullPreview> = ({ article, onLikeClick }) =
         <FormattedMessage id='articleEnter' />
       </Link>
     </ContentContainer>
+    {isModeration && (
+      <ArticleActionsContainer>
+        <PublishArticle onClick={() => publishArticle} />
+        <DeclineArticle onClick={() => declineArticle} />
+      </ArticleActionsContainer>
+    )}
   </ArticleCardContainer>
 );
 

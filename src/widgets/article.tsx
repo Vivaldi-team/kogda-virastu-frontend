@@ -5,12 +5,14 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import {
   addLikeThunk, deleteLikeThunk,
-  followTagThunk, unfollowTagThunk,
+  followTagThunk, publishArticleThunk, unfollowTagThunk,
 } from '../thunks';
 import { DeletePostButton, EditPostButton } from '../ui-lib';
 import { openConfirm } from '../store';
 import BarTags from './bar-tags';
 import Likes from './likes';
+import { DeclineArticle, PublishArticle } from '../ui-lib/buttons';
+import declineArticleThunk from '../thunks/decline-article-thunk';
 
 type TArticleProps = {
   slug: string;
@@ -118,7 +120,7 @@ const Article: FC<TArticleProps> = ({ slug }) => {
   const { article } = useSelector((state) => state.view);
   const currentUser = useSelector((state) => state.profile);
   const isAuthor = article?.author.username === currentUser.username;
-
+  const isAdmin = true;
   const onClickDelete = () => {
     if (article) {
       dispatch(openConfirm());
@@ -154,8 +156,23 @@ const Article: FC<TArticleProps> = ({ slug }) => {
   if (!article) {
     return null;
   }
+
   return (
     <ArticleContainer>
+      {isAdmin && (
+      <ArticleActionsContainer>
+        <PublishArticle
+          onClick={() => {
+            dispatch(publishArticleThunk(article.slug));
+          }}
+          disabled={article.state !== 'pending'} />
+        <DeclineArticle
+          onClick={() => {
+            dispatch(declineArticleThunk(article.slug));
+          }}
+          disabled={article.state !== 'pending'} />
+      </ArticleActionsContainer>
+      )}
       {isAuthor && (
         <ArticleActions onClickDelete={onClickDelete} onClickEdit={onClickEdit} />
       )}

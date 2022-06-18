@@ -51,6 +51,9 @@ const ru: TVocabulary = {
   mySubscriptions: 'Мои подписки',
   zeroSubscriptions: 'У вас пока нет активных подписок',
   copyText: 'Скопировать ссылку-приглашение',
+  onModeration: 'На модерации',
+  moderationPublish: 'Опубликовать',
+  moderationDecline: 'Отклонить',
   copyTextSuccess: 'Ссылка скопирована в буфер обмена',
 };
 
