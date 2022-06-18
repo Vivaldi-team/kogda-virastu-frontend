@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TAPIError, TAPIResponse  } from '../services/api.types';
+import { TAPIError, TAPIResponse } from '../services/api.types';
 
 type TAPIState = {
   successMessage: string | null,

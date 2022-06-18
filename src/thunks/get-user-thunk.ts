@@ -18,7 +18,7 @@ const getUserProfileThunk: AppThunk = () => async (dispatch) => {
     const {
       data: {
         user: {
-          username, roles, email, bio, image, token, nickname, 
+          username, roles, email, bio, image, token, nickname,
         },
       },
     } = await fetchCurrentUser();

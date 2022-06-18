@@ -11,11 +11,11 @@ import { AppThunk } from '../store/store.types';
 import { makeErrorObject } from '../services/helpers';
 import { TAPIError, TAPIPatchUserData } from '../services/api.types';
 
-const patchUserRolesThunk: AppThunk = (username: string, roles: string[]) => async (dispatch) => {
+const patchUserRolesThunk: AppThunk = (usernameValue: string, rolesValue: string[]) => async (dispatch) => {
   dispatch(userRolesPatchRequested());
   const userData: TAPIPatchUserData = {
-    username: username,
-    roles: roles,
+    username: usernameValue,
+    roles: rolesValue,
   };
   try {
     await patchUserRoles(userData);

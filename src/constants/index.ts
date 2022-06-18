@@ -11,8 +11,6 @@ import {
   IMAGES_ROUTE,
   ADMIN_ROUTE,
   JWT,
-  UPLOAD,
-  IMAGES_ROUTE,
 } from './api.constants';
 
 import {
@@ -38,8 +36,6 @@ export {
   IMAGES_ROUTE,
   ADMIN_ROUTE,
   JWT,
-  UPLOAD,
-  IMAGES_ROUTE,
   mobileBreakpoint,
   tabletBreakpoint,
   desktopBreakpoint,
