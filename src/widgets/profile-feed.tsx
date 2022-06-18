@@ -53,7 +53,6 @@ const ProfileFeed : FC = () => {
   const posts = useSelector((state) => state.view.feed);
   const tags = useSelector((state) => state.view.selectedTags) ?? [];
   const { isPublicFeedFetching } = useSelector((state) => state.api);
-  const itIsAdmin = true;
   if (!posts || isPublicFeedFetching) {
     return (
       <RegularText size='large' weight={500}>
@@ -87,7 +86,7 @@ const ProfileFeed : FC = () => {
                 onLikeClick={onClick}
                 publishArticle={publishArticle}
                 declineArticle={declineArticle}
-                isModeration={itIsAdmin} />
+                isModeration={false} />
               {index !== posts.length - 1 && index !== posts.length - 2
                   && <DividerCust distance={0} />}
             </ItemWrapper>
