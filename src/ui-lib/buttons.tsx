@@ -393,3 +393,19 @@ export const HeaderLoginButton : FC<TButtonProps> = ({ onClick, disabled = false
     </BasicNormalButton>
   );
 };
+
+export const DeclineArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationDecline' />
+    </RegularText>
+  </BasicNormalButton>
+);
+
+export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationPublish' />
+    </RegularText>
+  </BasicNormalButton>
+);

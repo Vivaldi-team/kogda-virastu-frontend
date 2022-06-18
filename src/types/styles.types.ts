@@ -1,3 +1,4 @@
+import { array, string } from 'prop-types';
 import {
   ChangeEventHandler, FocusEventHandler, MouseEventHandler,
 } from 'react';
@@ -80,7 +81,7 @@ export type TAvatarSizes = 'large' | 'small';
 export type TAvatarIconProps = {
   size: TAvatarSizes;
   name: string;
-  image: string;
+  image: string | null;
   distance?: number;
   color?: string;
 } | {

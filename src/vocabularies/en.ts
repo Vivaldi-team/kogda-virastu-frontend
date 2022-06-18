@@ -19,7 +19,7 @@ const en: TVocabulary = {
   sendComment: 'Send comment',
   articleName: 'Article title',
   articleAbout: 'About',
-  articleImage: 'URL of images (optional)',
+  articleImage: 'Image (optional)',
   articleText: 'Article Text',
   tags: 'Tags (comma-separated)',
   saveArticle: 'Create article',
@@ -30,6 +30,7 @@ const en: TVocabulary = {
   userName: 'User Name',
   userEmail: 'Email',
   password: 'Password',
+  profileImage: 'User avatar',
   invite: 'Invite code',
   confirmPassword: 'Confirm password',
   urlImage: 'User avatar URL',
@@ -51,6 +52,10 @@ const en: TVocabulary = {
   mySubscriptions: 'My subscriptions',
   zeroSubscriptions: 'You are not subscribed to anyone',
   copyText: 'Click to copy the code or link',
+  onModeration: 'On moderation',
+  moderationPublish: 'Publish',
+  moderationDecline: 'Decline',
+  copyTextSuccess: 'copied to the clipboard',
 };
 
 export default en;

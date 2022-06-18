@@ -1,16 +1,19 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { FormattedDate } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import {
   addLikeThunk, deleteLikeThunk,
-  followTagThunk, unfollowTagThunk,
+  followTagThunk, publishArticleThunk, unfollowTagThunk,
 } from '../thunks';
 import { DeletePostButton, EditPostButton } from '../ui-lib';
-import { openConfirm, setFollowTags } from '../store';
+import { openConfirm } from '../store';
 import BarTags from './bar-tags';
 import Likes from './likes';
+import { DeclineArticle, PublishArticle } from '../ui-lib/buttons';
+import declineArticleThunk from '../thunks/decline-article-thunk';
 
 type TArticleProps = {
   slug: string;
@@ -90,7 +93,7 @@ const ArticleImage = styled.img`
   height: 100%;
 `;
 
-const ArticleBody = styled.p`
+const ArticleBody = styled.div`
   font-family: ${({ theme: { text18: { family } } }) => family};
   font-size: ${({ theme: { text18: { size } } }) => size}px ;
   line-height: ${({ theme: { text18: { height } } }) => height}px;
@@ -118,7 +121,7 @@ const Article: FC<TArticleProps> = ({ slug }) => {
   const { article } = useSelector((state) => state.view);
   const currentUser = useSelector((state) => state.profile);
   const isAuthor = article?.author.username === currentUser.username;
-
+  const isAdmin = true;
   const onClickDelete = () => {
     if (article) {
       dispatch(openConfirm());
@@ -154,8 +157,23 @@ const Article: FC<TArticleProps> = ({ slug }) => {
   if (!article) {
     return null;
   }
+
   return (
     <ArticleContainer>
+      {isAdmin && (
+      <ArticleActionsContainer>
+        <PublishArticle
+          onClick={() => {
+            dispatch(publishArticleThunk(article.slug));
+          }}
+          disabled={article.state !== 'pending'} />
+        <DeclineArticle
+          onClick={() => {
+            dispatch(declineArticleThunk(article.slug));
+          }}
+          disabled={article.state !== 'pending'} />
+      </ArticleActionsContainer>
+      )}
       {isAuthor && (
         <ArticleActions onClickDelete={onClickDelete} onClickEdit={onClickEdit} />
       )}
@@ -180,7 +198,7 @@ const Article: FC<TArticleProps> = ({ slug }) => {
       {article.link && (
         <ArticleImage src={article.link} />
       )}
-      <ArticleBody>{article.body}</ArticleBody>
+      <ArticleBody>{parse(article.body)}</ArticleBody>
       <BarTags tagList={article.tagList} handleClick={handleClickFollow} />
     </ArticleContainer>
   );

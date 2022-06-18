@@ -85,12 +85,12 @@ const Main : FC = () => {
   const intl = useIntl();
   const { articles } = useSelector((state) => state.all);
   window.scrollTo(0, 0);
-  dispatch(settingsResetUpdateSucceeded());
   useEffect(() => {
     batch(() => {
       dispatch(getPublicFeedThunk());
       dispatch(getPrivateFeedThunk());
       dispatch(setNewPostsThunk());
+      dispatch(settingsResetUpdateSucceeded());
     });
   }, [dispatch]);
 

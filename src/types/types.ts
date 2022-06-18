@@ -35,6 +35,7 @@ export type TArticle = {
   title: string;
   updatedAt: string;
   privatePosts?: string;
+  state?: string;
 };
 
 export type TArticleCore = Omit<TArticle,
@@ -67,4 +68,8 @@ export enum UserArticlesTypes {
 }
 export type TInvite = {
   code: string;
+};
+
+export type TCompare = {
+  (a: TArticle, b: TArticle): number;
 };

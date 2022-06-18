@@ -13,6 +13,7 @@ import {
   articleDeleteClear,
   articlePatchClear,
   articlePostClear,
+  resetArticle,
 } from '../../store';
 import {
   getArticleThunk,
@@ -64,6 +65,7 @@ const EditorForm: FC = () => {
     if (initialArticle?.tagList) {
       dispatch(setTags(initialArticle.tagList.toString()));
     }
+    dispatch(resetArticle());
   }, [initialArticle, dispatch]);
 
   useEffect(

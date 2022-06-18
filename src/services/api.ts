@@ -320,6 +320,22 @@ export const deleteLikeArticle : ILikeArticle = (slug: string) : AxiosPromise<TA
   return blogAPI(injectBearerToken(requestConfig));
 };
 
+export const publishArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIArticle> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `/admin${ARTICLES_ROUTE}/${slug}/publish`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
+export const declineArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIArticle> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `/admin${ARTICLES_ROUTE}/${slug}/decline`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
 export const fetchTags : IFetchTags = () : AxiosPromise<TAPITags> => {
   const requestConfig : AxiosRequestConfig = {
     url: TAGS_ROUTE,
@@ -406,6 +422,7 @@ export const unfollowTag : ITag = (tag: string) : AxiosPromise<TAPITag> => {
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
+
 export const fetchInviteCode: IFetchInvite = () : AxiosPromise<TAPIInvite> => {
   const requestConfig: AxiosRequestConfig = {
     url: `${USER_ROUTE}/invites/new`,
@@ -423,7 +440,7 @@ export const uploadImage = (file: FormData) => {
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
- 
+
 export const fetchAllUsers : IFetchUsers = () : AxiosPromise<TAPIUsers> => {
   const requestConfig : AxiosRequestConfig = {
     url: `${ADMIN_ROUTE}/users`,
@@ -441,3 +458,4 @@ export const patchUserRoles : IPatchUser = (user: TAPIPatchUserData) : AxiosProm
   };
   return blogAPI(injectBearerToken(requestConfig));
 };
+
