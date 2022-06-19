@@ -28,7 +28,7 @@ const CommentList: FC<CommentListProps> = ({ slug }) => {
   const { commentsFeed: comments } = useSelector((store) => store.view);
   const currentUser = useSelector((state) => state.profile);
   let itIsAdmin = false;
-  if (!currentUser.roles?.includes('admin')) {
+  if (currentUser.roles?.includes('admin')) {
     itIsAdmin = true;
   }
   const onDeleteClick = (commentId: string) => {
