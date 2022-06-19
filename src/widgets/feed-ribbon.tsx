@@ -83,7 +83,7 @@ const FeedRibbon : FC = () => {
   const currentUser = useSelector((state) => state.profile);
   const tags = useSelector((state) => state.view.selectedTags) ?? [];
   let itIsAdmin = false;
-  if (!currentUser.roles?.includes('admin')) {
+  if (currentUser.roles?.includes('admin')) {
     itIsAdmin = true;
   }
   const [activePost, setActivePost] = useState(true);
