@@ -5,6 +5,7 @@ const en: TVocabulary = {
   userLogin: 'Login',
   newArticle: 'New post',
   settings: 'Settings',
+  admin: 'Admin',
   exitProfile: 'Exit',
   mainTitle: 'When I grow up',
   mainSubtitle: 'What it’s like to be a junior in a turbulent world',
@@ -51,7 +52,14 @@ const en: TVocabulary = {
   mySubscriptions: 'My subscriptions',
   zeroSubscriptions: 'You are not subscribed to anyone',
   copyText: 'Click to copy the code or link',
+  onModeration: 'On moderation',
+  moderationPublish: 'Publish',
+  published: 'Published',
+  moderationDecline: 'Decline',
+  moderationHold: 'Hold',
   copyTextSuccess: 'copied to the clipboard',
+  ok: 'OK',
+  serverErrorMessage: 'Too many connections. Try again later',
 };
 
 export default en;

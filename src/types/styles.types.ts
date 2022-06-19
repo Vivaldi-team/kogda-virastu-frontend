@@ -138,7 +138,7 @@ export type TDividerProps = {
   distance: number;
 };
 
-export type TInputFieldType = 'text' | 'email' | 'password' | 'url' | 'file';
+export type TInputFieldType = 'text' | 'email' | 'password' | 'url' | 'file' | 'radio' | 'checkbox';
 
 export type TFieldInput = {
   value?: string;

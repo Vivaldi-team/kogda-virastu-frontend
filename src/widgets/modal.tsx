@@ -6,11 +6,11 @@ import styled, { useTheme } from 'styled-components';
 import ReactDOM from 'react-dom';
 import { FormattedMessage } from 'react-intl';
 import {
-  ConfirmDeleteButton, CrossIcon, HeaderTwoText, RegularText,
+  ConfirmDeleteButton, CrossIcon, HeaderTwoText, RegularText, OKButton,
 } from '../ui-lib';
 
 import { mobileBreakpoint, mobileViewModal } from '../constants';
-import { TModalProps } from '../types/widgets.types';
+import { TModalProps, TModalContentProps } from '../types/widgets.types';
 
 const modalStepWidth = (600 - 280) / (mobileViewModal - mobileBreakpoint);
 const modalStepHeight = (320 - 342) / (mobileViewModal - mobileBreakpoint);
@@ -45,7 +45,7 @@ const CloseButton = styled.button`
 const ModalDialog = styled.div`
   position: relative;
   width: 600px;
-  height: 320px;
+  min-height: 320px;
   z-index: 97;
   display: flex;
   flex-flow: column nowrap;
@@ -61,7 +61,52 @@ const ModalDialog = styled.div`
   }
 `;
 
-const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
+const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  gap: 32px;
+`;
+
+export const ModalContent : FC<TModalContentProps> = ({
+  onSubmit,
+  modalHeaderText,
+  modalText,
+  button,
+}) => {
+  const theme = useTheme();
+
+  return (
+    <ModalContainer>
+      {modalHeaderText
+        && (
+        <HeaderTwoText color={theme.modalCaption}>
+          <FormattedMessage id={modalHeaderText} />
+        </HeaderTwoText>
+        )}
+      <RegularText
+        size='large'
+        weight={400}
+        sansSerif
+        color={theme.modalText}
+        align='center'
+        paddingCSS='max-width: 400px;'>
+        <FormattedMessage id={modalText} />
+      </RegularText>
+      {button === 'deleteButton'
+        && (
+        <ConfirmDeleteButton onClick={onSubmit} />
+        )}
+      {button === 'okButton'
+        && (
+        <OKButton onClick={onSubmit} />
+        )}
+    </ModalContainer>
+  );
+};
+
+export const Modal : FC<TModalProps> = ({ children, onClose }) => {
   const theme = useTheme();
   const portalRoot = useMemo(() => document.getElementById('modal'), []) as Element;
   useEffect(() => {
@@ -74,7 +119,7 @@ const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     };
-  }, [onClose, portalRoot]);
+  }, [onClose]);
   const onCloseClick : MouseEventHandler = () => onClose();
 
   return ReactDOM.createPortal(
@@ -82,23 +127,9 @@ const Modal : FC<TModalProps> = ({ onClose, onSubmit }) => {
       <ModalOverlay onClick={onCloseClick}>
         <ModalDialog>
           <CloseButton onClick={onCloseClick}><CrossIcon color={theme.primaryText} /></CloseButton>
-          <HeaderTwoText color={theme.modalCaption} marginCSS='margin-top: 56px;'>
-            <FormattedMessage id='deleteArticle' />
-          </HeaderTwoText>
-          <RegularText
-            size='large'
-            weight={400}
-            sansSerif
-            color={theme.modalText}
-            marginCSS='margin: 36px 0;'
-            paddingCSS='max-width: 400px;'>
-            <FormattedMessage id='deletepopuptext' />
-          </RegularText>
-          <ConfirmDeleteButton onClick={onSubmit} />
+          {children}
         </ModalDialog>
       </ModalOverlay>
     ), portalRoot,
   );
 };
-
-export default Modal;

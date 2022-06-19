@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from '../services/hooks';
 import { Divider, RegularText } from '../ui-lib';
 import ScrollRibbon from './scroll-ribbon';
 import ArticleFullPreview from './article-full-preview';
-import { addLikeThunk, deleteLikeThunk } from '../thunks';
+import { addLikeThunk, deleteLikeThunk, publishArticleThunk } from '../thunks';
+import declineArticleThunk from '../thunks/decline-article-thunk';
 
 const RibbonWrapper = styled.ul`
   width: 100%;
@@ -72,11 +73,20 @@ const ProfileFeed : FC = () => {
               dispatch(addLikeThunk(post.slug));
             }
           };
+          const declineArticle: MouseEventHandler = () => {
+            dispatch(declineArticleThunk(post.slug));
+          };
+          const publishArticle: MouseEventHandler = () => {
+            dispatch(publishArticleThunk(post.slug));
+          };
           return (
             <ItemWrapper key={post.slug}>
               <ArticleFullPreview
                 article={post}
-                onLikeClick={onClick} />
+                onLikeClick={onClick}
+                publishArticle={publishArticle}
+                declineArticle={declineArticle}
+                isModeration={false} />
               {index !== posts.length - 1 && index !== posts.length - 2
                   && <DividerCust distance={0} />}
             </ItemWrapper>

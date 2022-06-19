@@ -20,7 +20,9 @@ type TAPIState = {
   isArticlePatching: boolean,
   isArticlePatchingSucceeded: boolean,
   isLikeArticlePosting: boolean,
-  isLikeArticleDeleting: boolean,
+  isLikeArticleDecline: boolean,
+  isArticlePublish: boolean,
+  isArticleDeclining: boolean,
   isTagsFetching: boolean,
   isCommentsFetching: boolean,
   isCommentPosting: boolean,
@@ -38,6 +40,9 @@ type TAPIState = {
   isGenerateInviteCodeFetching: boolean,
   isUploadImageFetching: boolean,
   uploadImageRes: TAPIResponse | null,
+  isAllUsersFetching: boolean,
+  isUserRolesChange: boolean,
+  isArticleHold: boolean,
 };
 
 const initialState : TAPIState = {
@@ -59,7 +64,9 @@ const initialState : TAPIState = {
   isArticlePatching: false,
   isArticlePatchingSucceeded: false,
   isLikeArticlePosting: false,
-  isLikeArticleDeleting: false,
+  isLikeArticleDecline: false,
+  isArticlePublish: false,
+  isArticleDeclining: false,
   isTagsFetching: false,
   isCommentsFetching: false,
   isCommentPosting: false,
@@ -77,6 +84,9 @@ const initialState : TAPIState = {
   isGenerateInviteCodeFetching: false,
   isUploadImageFetching: false,
   uploadImageRes: null,
+  isAllUsersFetching: false,
+  isUserRolesChange: false,
+  isArticleHold: false,
 };
 
 const apiSlice = createSlice({
@@ -248,6 +258,33 @@ const apiSlice = createSlice({
     likeArticleDeleteFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isLikeArticleDeleting: false, errorObject: action.payload,
     }),
+    publishArticlePostRequested: (state) => ({
+      ...state, isArticlePublish: true,
+    }),
+    publishArticlePostSucceeded: (state) => ({
+      ...state, isArticlePublish: false,
+    }),
+    publishArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticlePublish: false, errorObject: action.payload,
+    }),
+    declineArticlePostRequested: (state) => ({
+      ...state, isLikeArticleDecline: true,
+    }),
+    declineArticlePostSucceeded: (state) => ({
+      ...state, isLikeArticleDecline: false,
+    }),
+    declineArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isLikeArticleDecline: false, errorObject: action.payload,
+    }),
+    holdArticlePostRequested: (state) => ({
+      ...state, isArticleHold: true,
+    }),
+    holdArticlePostSucceeded: (state) => ({
+      ...state, isArticleHold: false,
+    }),
+    holdArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticleHold: false, errorObject: action.payload,
+    }),
     tagsFetchRequested: (state) => ({
       ...state, isTagsFetching: true,
     }),
@@ -380,6 +417,24 @@ const apiSlice = createSlice({
     uploadImageFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isUploadImageFetching: false, errorObject: action.payload,
     }),
+    allUsersRequested: (state) => ({
+      ...state, isAllUsersFetching: true,
+    }),
+    allUsersRequestSucceeded: (state) => ({
+      ...state, isAllUsersFetching: false,
+    }),
+    allUsersRequestFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isAllUsersFetching: false, errorObject: action.payload,
+    }),
+    userRolesPatchRequested: (state) => ({
+      ...state, isUserRolesChange: true,
+    }),
+    userRolesPatchSucceeded: (state) => ({
+      ...state, isUserRolesChange: false,
+    }),
+    userRolesPatchFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isUserRolesChange: false, errorObject: action.payload,
+    }),
   },
 });
 
@@ -427,6 +482,15 @@ export const {
   likeArticleDeleteRequested,
   likeArticleDeleteSucceeded,
   likeArticleDeleteFailed,
+  publishArticlePostRequested,
+  publishArticlePostSucceeded,
+  publishArticlePostFailed,
+  declineArticlePostRequested,
+  declineArticlePostSucceeded,
+  declineArticlePostFailed,
+  holdArticlePostRequested,
+  holdArticlePostSucceeded,
+  holdArticlePostFailed,
   tagsFetchRequested,
   tagsFetchSucceeded,
   tagsFetchFailed,
@@ -478,5 +542,11 @@ export const {
   uploadImageSucceeded,
   uploadImageFailed,
   resetUploadImageRes,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 } = apiSlice.actions;
 export default apiReducer;

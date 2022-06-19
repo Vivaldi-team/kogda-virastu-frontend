@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from '../services/hooks';
 import { Divider, RegularText } from '../ui-lib';
 import ScrollRibbon from './scroll-ribbon';
 import ArticleFullPreview from './article-full-preview';
-import { addLikeThunk, deleteLikeThunk } from '../thunks';
+import { addLikeThunk, deleteLikeThunk, publishArticleThunk } from '../thunks';
 import { blue, greySecondary, primaryBlack } from '../constants/colors';
-import { TCompare } from '../types/types';
+import declineArticleThunk from '../thunks/decline-article-thunk';
+import { TCompare, TArticle } from '../types/types';
 
 const RibbonWrapper = styled.ul`
   width: 100%;
@@ -79,17 +80,24 @@ const FeedRibbon : FC = () => {
   const dispatch = useDispatch();
   const sharedPosts = useSelector((state) => state.view.feed);
   const privatePosts = useSelector((state) => state.view.privateFeed);
+  const currentUser = useSelector((state) => state.profile);
   const tags = useSelector((state) => state.view.selectedTags) ?? [];
-
+  let itIsAdmin = false;
+  if (currentUser.roles?.includes('admin')) {
+    itIsAdmin = true;
+  }
   const [activePost, setActivePost] = useState(true);
   const [active, setActive] = useState(false);
+  const [activeModeration, setactiveModeration] = useState(false);
   let posts = sharedPosts;
-
-  if (activePost) {
-    posts = sharedPosts;
-  } else {
+  if (activeModeration && sharedPosts) {
+    posts = sharedPosts?.filter((element) => element.state === 'pending');
+  } else if (activePost && sharedPosts) {
+    posts = sharedPosts?.filter((element) => element.state === 'published');
+  } else if (active && privatePosts) {
     posts = privatePosts;
   }
+
   if (!posts) {
     return (
       <RegularText size='large' weight={500}>
@@ -113,16 +121,36 @@ const FeedRibbon : FC = () => {
           <TabContainer>
             <Button
               type='button'
-              onClick={() => { setActivePost(!activePost); setActive(!active); }}
+              onClick={() => {
+                setActivePost(true);
+                setActive(false);
+                setactiveModeration(false);
+              }}
               active={activePost}>
               <FormattedMessage id='viewAllArticle' />
             </Button>
             <Button
               type='button'
-              onClick={() => { setActivePost(!activePost); setActive(!active); }}
+              onClick={() => {
+                setActivePost(false);
+                setActive(true);
+                setactiveModeration(false);
+              }}
               active={active}>
               <FormattedMessage id='mySubscriptions' />
             </Button>
+            {itIsAdmin && (
+            <Button
+              type='button'
+              onClick={() => {
+                setActivePost(false);
+                setActive(false);
+                setactiveModeration(true);
+              }}
+              active={activeModeration}>
+              <FormattedMessage id='onModeration' />
+            </Button>
+            )}
           </TabContainer>
           <RegularText size='large' weight={500}>
             <FormattedMessage id='zeroSubscriptions' />
@@ -138,16 +166,36 @@ const FeedRibbon : FC = () => {
         <TabContainer>
           <Button
             type='button'
-            onClick={() => { setActivePost(!activePost); setActive(!active); }}
+            onClick={() => {
+              setActivePost(true);
+              setActive(false);
+              setactiveModeration(false);
+            }}
             active={activePost}>
             <FormattedMessage id='viewAllArticle' />
           </Button>
           <Button
             type='button'
-            onClick={() => { setActivePost(!activePost); setActive(!active); }}
+            onClick={() => {
+              setActivePost(false);
+              setActive(true);
+              setactiveModeration(false);
+            }}
             active={active}>
             <FormattedMessage id='mySubscriptions' />
           </Button>
+          {itIsAdmin && (
+            <Button
+              type='button'
+              onClick={() => {
+                setActivePost(false);
+                setActive(false);
+                setactiveModeration(true);
+              }}
+              active={activeModeration}>
+              <FormattedMessage id='onModeration' />
+            </Button>
+          )}
         </TabContainer>
 
         <RibbonWrapper>
@@ -161,12 +209,21 @@ const FeedRibbon : FC = () => {
                 dispatch(addLikeThunk(post.slug));
               }
             };
+            const declineArticle: MouseEventHandler = () => {
+              dispatch(declineArticleThunk(post.slug));
+            };
+            const publishArticle: MouseEventHandler = () => {
+              dispatch(publishArticleThunk(post.slug));
+            };
             if (posts) {
               return (
                 <ItemWrapper key={post.slug}>
                   <ArticleFullPreview
                     article={post}
-                    onLikeClick={onClick} />
+                    onLikeClick={onClick}
+                    publishArticle={publishArticle}
+                    declineArticle={declineArticle}
+                    isModeration={activeModeration && itIsAdmin} />
                   {index !== posts.length - 1 && index !== posts.length - 2
                       && <DividerCust distance={0} />}
                 </ItemWrapper>

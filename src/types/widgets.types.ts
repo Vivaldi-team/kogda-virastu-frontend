@@ -19,6 +19,7 @@ export type TCommentAuthorHeadingProps = {
   date: Date;
   isAuthor: boolean;
   onDeleteClick?: React.MouseEventHandler<SVGSVGElement>;
+  itIsAdmin: boolean;
 };
 
 export type TBriefPostAnnounceProps = {
@@ -51,9 +52,16 @@ export interface IGenericVoidHandler {
   () : void;
 }
 
+export type TModalContentProps = {
+  onSubmit: IGenericVoidHandler;
+  modalHeaderText?: string;
+  modalText: string;
+  button: 'deleteButton' | 'okButton'
+};
+
 export type TModalProps = {
   onClose: IGenericVoidHandler;
-  onSubmit: IGenericVoidHandler;
+  children: JSX.Element;
 };
 
 export type TScrollRibbonProps = {
@@ -69,4 +77,5 @@ export type TCommentProps = {
   isAuthor: boolean,
   body: string,
   commentId: string,
+  itIsAdmin: boolean,
 };

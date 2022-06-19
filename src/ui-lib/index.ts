@@ -40,6 +40,8 @@ import {
   MenuNewPostButton,
   MenuSettingsButton,
   MenuLogoutButton,
+  MenuAdminButton,
+  OKButton,
 } from './buttons';
 
 import {
@@ -137,4 +139,6 @@ export {
   ArrowLeft,
   ArrowRight,
   PreloaderIcon,
+  MenuAdminButton,
+  OKButton,
 };

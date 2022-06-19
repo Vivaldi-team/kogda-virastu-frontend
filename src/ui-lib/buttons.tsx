@@ -16,6 +16,7 @@ import {
   LogoutIcon,
   HomeIcon,
   LoginIcon,
+  CheckIcon,
 } from './icons';
 import { getPropOnCondition, setColor } from '../services/helpers';
 import useMouseEvents from '../services/hooks/use-mouse-events';
@@ -308,6 +309,23 @@ export const MenuSettingsButton : FC<TButtonProps> = ({ onClick, disabled = fals
   );
 };
 
+export const MenuAdminButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
+  const theme = useTheme();
+  return (
+    <MenuButton
+      colorScheme='menu'
+      disabled={disabled}
+      onClick={onClick}>
+      <CheckIcon
+        color={theme.button.menu.font}
+        distance={iconDistance} />
+      <RegularText size='large' weight={500}>
+        <FormattedMessage id='admin' />
+      </RegularText>
+    </MenuButton>
+  );
+};
+
 export const MenuNewPostButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
   const theme = useTheme();
   return (
@@ -375,3 +393,35 @@ export const HeaderLoginButton : FC<TButtonProps> = ({ onClick, disabled = false
     </BasicNormalButton>
   );
 };
+
+export const DeclineArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationDecline' />
+    </RegularText>
+  </BasicNormalButton>
+);
+
+export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id={disabled ? 'published' : 'moderationPublish'} />
+    </RegularText>
+  </BasicNormalButton>
+);
+
+export const HoldArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationHold' />
+    </RegularText>
+  </BasicNormalButton>
+);
+
+export const OKButton : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='ok' />
+    </RegularText>
+  </BasicNormalButton>
+);

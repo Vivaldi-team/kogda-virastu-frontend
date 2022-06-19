@@ -8,7 +8,7 @@ import HeaderMenuWidget from './header-menu-widget';
 import TopAnnounceWidget from './top-announce-widget';
 import Comment from './comment';
 import CommentInput from './comment-input';
-import Modal from './modal';
+import { Modal, ModalContent } from './modal';
 import CommentList from './comment-list';
 import Article from './article';
 import LoginForm from './forms/login-form';
@@ -33,6 +33,7 @@ export {
   Comment,
   CommentInput,
   Modal,
+  ModalContent,
   Article,
   LoginForm,
   RegisterForm,

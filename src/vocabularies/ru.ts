@@ -5,6 +5,7 @@ const ru: TVocabulary = {
   userLogin: 'Войти',
   newArticle: 'Новая запись',
   settings: 'Настройки',
+  admin: 'Админка',
   exitProfile: 'Выйти',
   mainTitle: 'Когда вырасту',
   mainSubtitle: 'Каково быть джуном  в турбулентном мире',
@@ -51,7 +52,14 @@ const ru: TVocabulary = {
   mySubscriptions: 'Мои подписки',
   zeroSubscriptions: 'У вас пока нет активных подписок',
   copyText: 'Скопировать ссылку-приглашение',
+  onModeration: 'На модерации',
+  moderationPublish: 'Опубликовать',
+  published: 'Опубликованно',
+  moderationDecline: 'Отклонить',
+  moderationHold: 'Снять с публикации',
   copyTextSuccess: 'Ссылка скопирована в буфер обмена',
+  ok: 'OK',
+  serverErrorMessage: 'Вы обращаетесь к серверу слишком часто, попробуйте через несколько минут',
 };
 
 export default ru;
