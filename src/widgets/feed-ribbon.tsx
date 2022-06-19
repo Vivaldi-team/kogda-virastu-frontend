@@ -61,7 +61,7 @@ const Button = styled.button<IButtonProps>`
     color: ${greySecondary};
     border: none;
     ${({ active }) => active && `
-    border-bottom: 2px solid ${blue}; 
+    border-bottom: 2px solid ${blue};
     color: ${primaryBlack};
   `}
     cursor: pointer;

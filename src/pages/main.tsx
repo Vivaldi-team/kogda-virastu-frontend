@@ -14,6 +14,7 @@ import {
 import { FeedRibbon, Slider } from '../widgets';
 import { desktopBreakpoint, mobileViewThreshold, tabletBreakpoint } from '../constants';
 import { settingsResetUpdateSucceeded } from '../store';
+import Preloader from '../widgets/preloader';
 
 const desktopToTabletGapStep = (80 - 40) / (desktopBreakpoint - tabletBreakpoint);
 const tabletToMobileGapStep = (40 - 20) / (tabletBreakpoint - mobileViewThreshold);
@@ -80,7 +81,8 @@ const RightColumn = styled.aside`
     }
   }
 `;
-const Main : FC = () => {
+const Main: FC = () => {
+  const posts = useSelector((state) => state.view.feed);
   const dispatch = useDispatch();
   const intl = useIntl();
   const { articles } = useSelector((state) => state.all);
@@ -102,14 +104,20 @@ const Main : FC = () => {
   return (
     <MainSection>
       <MainContainer>
-        <LeftColumn>
-          <FeedRibbon />
-        </LeftColumn>
-        <RightColumn>
-          <PopularTags />
-          <TopAnnounceWidget caption={intl.messages.popularContent as string} />
-          <Slider />
-        </RightColumn>
+        { posts === null
+          ? <Preloader color='rgba(255, 198, 0, 1)' />
+          : (
+            <>
+              <LeftColumn>
+                <FeedRibbon />
+              </LeftColumn>
+              <RightColumn>
+                <PopularTags />
+                <TopAnnounceWidget caption={intl.messages.popularContent as string} />
+                <Slider />
+              </RightColumn>
+            </>
+          )}
       </MainContainer>
     </MainSection>
   );

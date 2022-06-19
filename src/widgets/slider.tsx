@@ -7,7 +7,9 @@ import BuletSlider from '../ui-lib/buledSlider';
 import { useSelector } from '../services/hooks';
 import BriefPostAnnounceWidget from './brief-post-announce-widget';
 import { TArticle } from '../types/types';
-import { Divider, HeaderThreeText } from '../ui-lib';
+import {
+  Divider, HeaderThreeText, ArrowLeft, ArrowRight,
+} from '../ui-lib';
 
 const SlideContainer = styled.div`
 @keyframes show{
@@ -20,7 +22,7 @@ opacity:1;
 }
 opacity:0;
 transition: 1s;
-animation: show 3s 1;
+animation: show 1s 1;
 animation-fill-mode: forwards;
 animation-delay: 0s;
 display: flex;
@@ -76,7 +78,9 @@ const Slide: FC<TSlide> = ({ data, name, page }) => {
   return null;
 };
 const BuletBar = styled.div`
+        width: 100%;
         display: flex;
+        align-items: center;
         gap:12px;
         padding-top:16px;
         padding-bottom: 12px;
@@ -91,6 +95,13 @@ const Slider: FC = () => {
   }
   const [page, setPage] = useState<number>(0);
 
+  const onClickArrow = (step: number) => {
+    const pageNext = page + step;
+    if (pageNext >= 0 && (pageNext <= (data.length - 1))) {
+      setPage(page + step);
+    }
+  };
+
   return (
     <SlidersContainer>
       <HeaderThreeText paddingCSS='padding-bottom: 24px;'>
@@ -103,17 +114,21 @@ const Slider: FC = () => {
         ))
       }
       <BuletBar>
-        {
-          data && range.map((pageSlide) => {
-            const isActive = pageSlide === page;
-            const onClick: MouseEventHandler = () => {
-              setPage(pageSlide);
-            };
-            return (
-              <BuletSlider key={pageSlide} onClick={onClick} isActive={isActive} />
-            );
-          })
-        }
+        <>
+          <ArrowLeft color='$secondary-text' onClick={() => onClickArrow(-1)} />
+          {
+            data && range.map((pageSlide) => {
+              const isActive = pageSlide === page;
+              const onClick: MouseEventHandler = () => {
+                setPage(pageSlide);
+              };
+              return (
+                <BuletSlider key={pageSlide} onClick={onClick} isActive={isActive} />
+              );
+            })
+          }
+          <ArrowRight color='$secondary-text' onClick={() => onClickArrow(+1)} />
+        </>
       </BuletBar>
       <Divider distance={24} />
     </SlidersContainer>

@@ -19,6 +19,7 @@ import FeedRibbon from './feed-ribbon';
 import Slider from './slider';
 import ProfileFeed from './profile-feed';
 import FollowTags from './follow-tags';
+import Preloader from './preloader';
 
 export {
   Author,
@@ -43,4 +44,5 @@ export {
   Slider,
   ProfileFeed,
   FollowTags,
+  Preloader,
 };
