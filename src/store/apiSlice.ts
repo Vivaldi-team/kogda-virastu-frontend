@@ -42,6 +42,7 @@ type TAPIState = {
   uploadImageRes: TAPIResponse | null,
   isAllUsersFetching: boolean,
   isUserRolesChange: boolean,
+  isArticleHold: boolean,
 };
 
 const initialState : TAPIState = {
@@ -85,6 +86,7 @@ const initialState : TAPIState = {
   uploadImageRes: null,
   isAllUsersFetching: false,
   isUserRolesChange: false,
+  isArticleHold: false,
 };
 
 const apiSlice = createSlice({
@@ -273,6 +275,15 @@ const apiSlice = createSlice({
     }),
     declineArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isLikeArticleDecline: false, errorObject: action.payload,
+    }),
+    holdArticlePostRequested: (state) => ({
+      ...state, isArticleHold: true,
+    }),
+    holdArticlePostSucceeded: (state) => ({
+      ...state, isArticleHold: false,
+    }),
+    holdArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticleHold: false, errorObject: action.payload,
     }),
     tagsFetchRequested: (state) => ({
       ...state, isTagsFetching: true,
@@ -477,6 +488,9 @@ export const {
   declineArticlePostRequested,
   declineArticlePostSucceeded,
   declineArticlePostFailed,
+  holdArticlePostRequested,
+  holdArticlePostSucceeded,
+  holdArticlePostFailed,
   tagsFetchRequested,
   tagsFetchSucceeded,
   tagsFetchFailed,

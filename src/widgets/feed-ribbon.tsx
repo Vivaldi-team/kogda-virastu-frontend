@@ -80,8 +80,12 @@ const FeedRibbon : FC = () => {
   const dispatch = useDispatch();
   const sharedPosts = useSelector((state) => state.view.feed);
   const privatePosts = useSelector((state) => state.view.privateFeed);
+  const currentUser = useSelector((state) => state.profile);
   const tags = useSelector((state) => state.view.selectedTags) ?? [];
-  const itIsAdmin = true;
+  let itIsAdmin = false;
+  if (!currentUser.roles?.includes('admin')) {
+    itIsAdmin = true;
+  }
   const [activePost, setActivePost] = useState(true);
   const [active, setActive] = useState(false);
   const [activeModeration, setactiveModeration] = useState(false);

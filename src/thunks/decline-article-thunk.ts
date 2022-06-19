@@ -2,9 +2,9 @@ import { AxiosError } from 'axios';
 import { AppThunk } from '../store/store.types';
 import { declineArticle } from '../services/api';
 import {
-  publishArticlePostRequested,
-  publishArticlePostSucceeded,
-  publishArticlePostFailed,
+  declineArticlePostRequested,
+  declineArticlePostSucceeded,
+  declineArticlePostFailed,
   setViewArticle,
 } from '../store';
 import { TAPIError } from '../services/api.types';
@@ -13,7 +13,7 @@ import getPublicFeedThunk from './get-public-feed-thunk';
 
 const declineArticleThunk: AppThunk = (slug: string) => async (dispatch, getState) => {
   try {
-    dispatch(publishArticlePostRequested());
+    dispatch(declineArticlePostRequested());
     await declineArticle(slug);
     const articles = getState().view.feed ?? [];
     articles.forEach((element) => {
@@ -22,9 +22,9 @@ const declineArticleThunk: AppThunk = (slug: string) => async (dispatch, getStat
       }
     });
     dispatch(getPublicFeedThunk());
-    dispatch(publishArticlePostSucceeded());
+    dispatch(declineArticlePostSucceeded());
   } catch (error) {
-    dispatch(publishArticlePostFailed(makeErrorObject(error as AxiosError<TAPIError>)));
+    dispatch(declineArticlePostFailed(makeErrorObject(error as AxiosError<TAPIError>)));
   }
 };
 export default declineArticleThunk;

@@ -27,7 +27,10 @@ const CommentList: FC<CommentListProps> = ({ slug }) => {
   const dispatch = useDispatch();
   const { commentsFeed: comments } = useSelector((store) => store.view);
   const currentUser = useSelector((state) => state.profile);
-  const itIsAdmin = true;
+  let itIsAdmin = false;
+  if (!currentUser.roles?.includes('admin')) {
+    itIsAdmin = true;
+  }
   const onDeleteClick = (commentId: string) => {
     dispatch(deleteCommentThunk(slug, commentId));
   };

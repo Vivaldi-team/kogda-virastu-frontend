@@ -336,6 +336,14 @@ export const declineArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIA
   return blogAPI(injectBearerToken(requestConfig));
 };
 
+export const holdArticle : ILikeArticle = (slug: string) : AxiosPromise<TAPIArticle> => {
+  const requestConfig : AxiosRequestConfig = {
+    url: `/admin${ARTICLES_ROUTE}/${slug}/hold`,
+    method: 'post',
+  };
+  return blogAPI(injectBearerToken(requestConfig));
+};
+
 export const fetchTags : IFetchTags = () : AxiosPromise<TAPITags> => {
   const requestConfig : AxiosRequestConfig = {
     url: TAGS_ROUTE,
