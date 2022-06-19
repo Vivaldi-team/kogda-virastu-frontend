@@ -56,6 +56,8 @@ const en: TVocabulary = {
   moderationPublish: 'Publish',
   moderationDecline: 'Decline',
   copyTextSuccess: 'copied to the clipboard',
+  ok: 'OK',
+  serverErrorMessage: 'Too many connections. Try again later',
 };
 
 export default en;

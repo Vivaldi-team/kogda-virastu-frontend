@@ -409,3 +409,11 @@ export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false })
     </RegularText>
   </BasicNormalButton>
 );
+
+export const OKButton : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='ok' />
+    </RegularText>
+  </BasicNormalButton>
+);

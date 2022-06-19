@@ -198,6 +198,8 @@ import {
   closeMenu,
   openConfirm,
   closeConfirm,
+  closeErrorMessage,
+  openErrorMessage,
 } from './systemSlice';
 
 export {
@@ -378,4 +380,6 @@ export {
   userRolesPatchRequested,
   userRolesPatchSucceeded,
   userRolesPatchFailed,
+  closeErrorMessage,
+  openErrorMessage,
 };

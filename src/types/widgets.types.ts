@@ -52,12 +52,14 @@ export interface IGenericVoidHandler {
   () : void;
 }
 
-export type TModalProps = {
-  onClose: IGenericVoidHandler;
+export type TModalContentProps = {
   onSubmit: IGenericVoidHandler;
+  modalHeaderText?: string;
+  modalText: string;
+  button: 'deleteButton' | 'okButton'
 };
 
-export type TModalOverlayProps = {
+export type TModalProps = {
   onClose: IGenericVoidHandler;
   children: JSX.Element;
 };
