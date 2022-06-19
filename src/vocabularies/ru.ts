@@ -56,6 +56,8 @@ const ru: TVocabulary = {
   moderationPublish: 'Опубликовать',
   moderationDecline: 'Отклонить',
   copyTextSuccess: 'Ссылка скопирована в буфер обмена',
+  ok: 'OK',
+  serverErrorMessage: 'Вы обращаетесь к серверу слишком часто, попробуйте через несколько минут',
 };
 
 export default ru;
