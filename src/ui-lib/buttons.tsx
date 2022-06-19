@@ -405,7 +405,15 @@ export const DeclineArticle : FC<TButtonProps> = ({ onClick, disabled = false })
 export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
   <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
     <RegularText size='large' weight={500}>
-      <FormattedMessage id='moderationPublish' />
+      <FormattedMessage id={disabled ? 'published' : 'moderationPublish'} />
+    </RegularText>
+  </BasicNormalButton>
+);
+
+export const HoldArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationHold' />
     </RegularText>
   </BasicNormalButton>
 );

@@ -12,8 +12,9 @@ import { DeletePostButton, EditPostButton } from '../ui-lib';
 import { openConfirm } from '../store';
 import BarTags from './bar-tags';
 import Likes from './likes';
-import { DeclineArticle, PublishArticle } from '../ui-lib/buttons';
+import { DeclineArticle, HoldArticle, PublishArticle } from '../ui-lib/buttons';
 import declineArticleThunk from '../thunks/decline-article-thunk';
+import holdArticleThunk from '../thunks/hold-article-thunk';
 
 type TArticleProps = {
   slug: string;
@@ -160,18 +161,27 @@ const Article: FC<TArticleProps> = ({ slug }) => {
 
   return (
     <ArticleContainer>
-      {isAdmin && (
+      {isAdmin && (article.state !== 'declined') && (
       <ArticleActionsContainer>
         <PublishArticle
           onClick={() => {
             dispatch(publishArticleThunk(article.slug));
           }}
-          disabled={article.state !== 'pending'} />
-        <DeclineArticle
-          onClick={() => {
-            dispatch(declineArticleThunk(article.slug));
-          }}
-          disabled={article.state !== 'pending'} />
+          disabled={article.state === 'published'} />
+        {article.state === 'pending'
+          ? (
+            <DeclineArticle
+              onClick={() => {
+                dispatch(declineArticleThunk(article.slug));
+              }}
+              disabled={false} />
+          ) : (
+            <HoldArticle
+              onClick={() => {
+                dispatch(holdArticleThunk(article.slug));
+              }}
+              disabled={false} />
+          )}
       </ArticleActionsContainer>
       )}
       {isAuthor && (
