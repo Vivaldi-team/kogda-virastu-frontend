@@ -50,12 +50,12 @@ const ArticleActionsContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  && > button {
-    width:233px;
-    @media screen  and (max-width:725px) {
-      width:175px;
-    }
-  }
+  //&& > button {
+  //  width:233px;
+  //  @media screen  and (max-width:725px) {
+  //    width:175px;
+  //  }
+  //}
 `;
 
 const ArticleAuthor = styled.p`

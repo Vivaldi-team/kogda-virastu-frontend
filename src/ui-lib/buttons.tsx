@@ -30,7 +30,7 @@ type TBasicButtonProps = {
 };
 
 export const BasicNormalButton = styled.button<TBasicButtonProps>`
- // width: 100%;
+  //width: 100%;
   padding: 8px 16px;
   border-radius: 4px;
   border-width: 0;
@@ -52,6 +52,15 @@ export const BasicNormalButton = styled.button<TBasicButtonProps>`
     background-color: ${({ colorScheme, theme: { button }, disabled }) => getPropOnCondition(disabled, button[colorScheme].active, button[colorScheme].disabled)};
     }
   `;
+const BasicAdminButton = styled(BasicNormalButton)`
+  @media screen and (max-width:400px) {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+
+`;
 
 const BasicInvertedButton = styled.button<TBasicButtonProps>`
   padding: 8px 16px;
@@ -103,7 +112,7 @@ const MenuButton = styled.button<TBasicButtonProps>`
 export const EditPostButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
   const theme = useTheme();
   return (
-    <BasicNormalButton
+    <BasicAdminButton
       colorScheme='blue'
       disabled={disabled}
       onClick={onClick}>
@@ -113,7 +122,7 @@ export const EditPostButton : FC<TButtonProps> = ({ onClick, disabled = false })
       <RegularText size='large' weight={400} sansSerif>
         <FormattedMessage id='editArticle' />
       </RegularText>
-    </BasicNormalButton>
+    </BasicAdminButton>
   );
 };
 export const DeletePostButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
@@ -395,27 +404,27 @@ export const HeaderLoginButton : FC<TButtonProps> = ({ onClick, disabled = false
 };
 
 export const DeclineArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
-  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+  <BasicAdminButton colorScheme='red' disabled={disabled} onClick={onClick}>
     <RegularText size='large' weight={500}>
       <FormattedMessage id='moderationDecline' />
     </RegularText>
-  </BasicNormalButton>
+  </BasicAdminButton>
 );
 
 export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
-  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+  <BasicAdminButton colorScheme='blue' disabled={disabled} onClick={onClick}>
     <RegularText size='large' weight={500}>
       <FormattedMessage id={disabled ? 'published' : 'moderationPublish'} />
     </RegularText>
-  </BasicNormalButton>
+  </BasicAdminButton>
 );
 
 export const HoldArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
-  <BasicNormalButton colorScheme='red' disabled={disabled} onClick={onClick}>
+  <BasicAdminButton colorScheme='red' disabled={disabled} onClick={onClick}>
     <RegularText size='large' weight={500}>
       <FormattedMessage id='moderationHold' />
     </RegularText>
-  </BasicNormalButton>
+  </BasicAdminButton>
 );
 
 export const OKButton : FC<TButtonProps> = ({ onClick, disabled = false }) => (
