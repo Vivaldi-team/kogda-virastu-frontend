@@ -24,9 +24,9 @@ import {
   TAPIComments,
   TAPIComment,
   TAPIProfile,
-  TAPIAuth,
+  TAPIAuth, TAPIPatchRole,
   TAPIPatchUserData, TAPIPatchArticleData, TAPIInvite,
-  TAPIUsers,
+  TAPIUsers, TAPIPatchUserRole,
 } from './api.types';
 import {
   IDeleteArticle,
@@ -39,6 +39,7 @@ import {
   ILoginUser,
   IPatchArticle,
   IPatchUser,
+  IPatchUserRole,
   IPostArticle,
   IPostComment,
   IProfile,
@@ -457,7 +458,9 @@ export const fetchAllUsers : IFetchUsers = () : AxiosPromise<TAPIUsers> => {
   return blogAPI(injectBearerToken(requestConfig));
 };
 
-export const patchUserRoles : IPatchUser = (user: TAPIPatchUserData) : AxiosPromise<TAPIAuth> => {
+export const patchUserRoles : IPatchUserRole = (
+  user: TAPIPatchUserRole,
+) : AxiosPromise<TAPIPatchRole> => {
   const { username, roles } = user;
   const requestConfig : AxiosRequestConfig = {
     url: `${ADMIN_ROUTE}/users/${username}/roles`,
