@@ -73,8 +73,14 @@ const AdminPanel: FC = () => {
   const { users } = useSelector((state) => state.all);
   const dispatch = useDispatch();
 
-  const onChange = (username: string, roles: string[]) => {
-    dispatch(patchUserRolesThunk(username, roles));
+  const onChange = (username: string, roles: string[] | undefined) => {
+    let rolesValue = [];
+    if (roles && roles.includes('admin')) {
+      rolesValue = ['user'];
+    } else {
+      rolesValue = ['user', 'admin'];
+    }
+    dispatch(patchUserRolesThunk(username, rolesValue));
   };
 
   return (
@@ -98,7 +104,7 @@ const AdminPanel: FC = () => {
                 type='checkbox'
                 name='Cделать админом'
                 labelText='Cделать админом'
-                onChange={() => onChange(user.username, user.roles?.includes('admin') ? ['user'] : ['user', 'admin'])} />
+                onChange={() => onChange(user.username, user.roles)} />
             </UserContainer>
           ))
         }

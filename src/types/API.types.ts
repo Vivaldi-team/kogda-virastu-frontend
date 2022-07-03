@@ -3,6 +3,7 @@ import {
   TAPIArticle,
   TAPIArticles,
   TAPIAuth,
+  TAPIPatchRole,
   TAPIComment,
   TAPIComments, TAPIParamsObject, TAPIPatchArticleData,
   TAPIProfile,
@@ -45,6 +46,15 @@ export interface IPatchUser {
     image?:string,
     nickname?: string,
   }) : AxiosPromise<TAPIAuth>;
+}
+
+export interface IPatchUserRole {
+  ({
+    username, roles,
+  }: {
+    username: string,
+    roles?: string[],
+  }) : AxiosPromise<TAPIPatchRole>;
 }
 
 export interface IFetchArticles {

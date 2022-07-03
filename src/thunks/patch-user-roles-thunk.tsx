@@ -9,11 +9,14 @@ import {
 import getAllUsersThunk from './get-all-users-thunk';
 import { AppThunk } from '../store/store.types';
 import { makeErrorObject } from '../services/helpers';
-import { TAPIError, TAPIPatchUserData } from '../services/api.types';
+import { TAPIError, TAPIPatchUserRole } from '../services/api.types';
 
-const patchUserRolesThunk: AppThunk = (usernameValue: string, rolesValue: string[]) => async (dispatch) => {
+const patchUserRolesThunk: AppThunk = (
+  usernameValue: string,
+  rolesValue: string[],
+) => async (dispatch) => {
   dispatch(userRolesPatchRequested());
-  const userData: TAPIPatchUserData = {
+  const userData: TAPIPatchUserRole = {
     username: usernameValue,
     roles: rolesValue,
   };

@@ -26,6 +26,13 @@ export type TAPIAuth = {
   };
 };
 
+export type TAPIPatchRole = {
+  user: {
+    roles?: string[];
+    username: string;
+  };
+};
+
 export type TAPILoginUser = {
   user: {
     email: string;
@@ -49,6 +56,11 @@ export type TAPIPatchUserData = {
   image?: string;
   password?: string;
   nickname?: string;
+};
+
+export type TAPIPatchUserRole = {
+  roles?: string[];
+  username: string;
 };
 
 export type TAPIPatchUser = {
