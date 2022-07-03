@@ -1,5 +1,4 @@
 export const API_ROOT = 'http://localhost:3000/api';
-// export const API_ROOT = 'https://redtypes.ru/blog/api';
 
 export const REGISTER_ROUTE = '/users';
 export const LOGIN_ROUTE = '/users/login';
