@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
 import { TAvatarSizes, TAvatarIconProps, TIconProps } from '../types/styles.types';
-
 import { ReactComponent as EditPic } from '../assets/images/icons/edit-icon.svg';
 import { ReactComponent as BasketPic } from '../assets/images/icons/trash-icon.svg';
 import { ReactComponent as AvatarPic } from '../assets/images/icons/avatar-icon.svg';
@@ -22,7 +20,6 @@ import { ReactComponent as EyeNoPic } from '../assets/images/icons/eyeNo-icon.sv
 import { ReactComponent as ArrowLeftPic } from '../assets/images/icons/arrow-left-icon.svg';
 import { ReactComponent as ArrowRightPic } from '../assets/images/icons/arrow-right-icon.svg';
 import { ReactComponent as PreloaderPic } from '../assets/images/icons/preloader.svg';
-
 import { getAvatarBorderProp } from '../services/helpers';
 import { blue, greySecondary } from '../constants/colors';
 

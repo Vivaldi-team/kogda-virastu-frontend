@@ -58,4 +58,5 @@ export const {
   changeInviteCodeRegister,
   resetFormRegister,
 } = registerFormSubSlice.actions;
+
 export default registerReducer;
