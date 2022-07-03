@@ -9,6 +9,7 @@ type TSystemState = {
   currentLang: string,
   isMenuOpen: boolean,
   isDeleteConfirmOpen: boolean,
+  isErrorMessageOpen: boolean,
 };
 
 const initialState: TSystemState = {
@@ -18,6 +19,7 @@ const initialState: TSystemState = {
   currentLang: defaultLang,
   isMenuOpen: false,
   isDeleteConfirmOpen: false,
+  isErrorMessageOpen: false,
 };
 
 const systemSlice = createSlice({
@@ -44,6 +46,12 @@ const systemSlice = createSlice({
     closeConfirm: (state) => ({
       ...state, isDeleteConfirmOpen: false,
     }),
+    openErrorMessage: (state) => ({
+      ...state, isErrorMessageOpen: true,
+    }),
+    closeErrorMessage: (state) => ({
+      ...state, isErrorMessageOpen: false,
+    }),
   },
 });
 
@@ -57,5 +65,7 @@ export const {
   closeMenu,
   openConfirm,
   closeConfirm,
+  openErrorMessage,
+  closeErrorMessage,
 } = systemSlice.actions;
 export default systemReducer;

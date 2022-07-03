@@ -10,6 +10,7 @@ import {
 import { fetchCurrentUser, jwt } from '../services/api';
 import { TAPIError } from '../services/api.types';
 import { makeErrorObject } from '../services/helpers';
+import getFollowTagsThunk from './get-follow-tags-thunk';
 
 const getUserProfileThunk: AppThunk = () => async (dispatch) => {
   dispatch(userFetchRequested());
@@ -17,17 +18,18 @@ const getUserProfileThunk: AppThunk = () => async (dispatch) => {
     const {
       data: {
         user: {
-          username, email, bio, image, token, nickname,
+          username, roles, email, bio, image, token, nickname,
         },
       },
     } = await fetchCurrentUser();
     jwt.set(token);
     batch(() => {
       dispatch(setUser({
-        username, email, bio, image, nickname,
+        username, roles, email, bio, image, nickname,
       }));
       dispatch(userFetchSucceeded());
       dispatch(onLogin());
+      dispatch(getFollowTagsThunk());
     });
   } catch (error) {
     dispatch(userFetchFailed(makeErrorObject(error as AxiosError<TAPIError>)));

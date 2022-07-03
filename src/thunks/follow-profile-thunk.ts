@@ -10,6 +10,7 @@ import { postFollowProfile } from '../services/api';
 import { AppThunk } from '../store/store.types';
 import { TAPIProfile, TAPIError } from '../services/api.types';
 import { makeErrorObject } from '../services/helpers';
+import getPrivateFeedThunk from './get-private-feed-thunk';
 
 const followProfileThunk: AppThunk = () => async (dispatch, getState) => {
   const { profile } = getState().view;
@@ -21,6 +22,7 @@ const followProfileThunk: AppThunk = () => async (dispatch, getState) => {
     batch(() => {
       dispatch(setViewProfile(data.profile));
       dispatch(followProfilePostSucceeded());
+      dispatch(getPrivateFeedThunk());
     });
   } catch (error) {
     dispatch(followProfilePostFailed(makeErrorObject(error as AxiosError<TAPIError>)));

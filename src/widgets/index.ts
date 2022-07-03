@@ -8,7 +8,7 @@ import HeaderMenuWidget from './header-menu-widget';
 import TopAnnounceWidget from './top-announce-widget';
 import Comment from './comment';
 import CommentInput from './comment-input';
-import Modal from './modal';
+import { Modal, ModalContent } from './modal';
 import CommentList from './comment-list';
 import Article from './article';
 import LoginForm from './forms/login-form';
@@ -17,6 +17,9 @@ import SettingsForm from './forms/settings-form';
 import ScrollRibbon from './scroll-ribbon';
 import FeedRibbon from './feed-ribbon';
 import Slider from './slider';
+import ProfileFeed from './profile-feed';
+import FollowTags from './follow-tags';
+import Preloader from './preloader';
 
 export {
   Author,
@@ -30,6 +33,7 @@ export {
   Comment,
   CommentInput,
   Modal,
+  ModalContent,
   Article,
   LoginForm,
   RegisterForm,
@@ -38,4 +42,7 @@ export {
   FeedRibbon,
   CommentList,
   Slider,
+  ProfileFeed,
+  FollowTags,
+  Preloader,
 };

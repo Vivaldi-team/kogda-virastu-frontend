@@ -20,6 +20,14 @@ import postArticleThunk from './post-article-thunk';
 import setTopLikedThunk from './set-top-liked-thunk';
 import setNewPostsThunk from './set-new-posts-thunk';
 import getAllPostsThunk from './get-all-posts-thunk';
+import followTagThunk from './follow-tag-thunk';
+import unfollowTagThunk from './unfollow-tag-thunk';
+import getFollowTagsThunk from './get-follow-tags-thunk';
+import getInviteCodeThunk from './get-inviteCode-thunk';
+import getAllUsersThunk from './get-all-users-thunk';
+import patchUserRolesThunk from './patch-user-roles-thunk';
+import publishArticleThunk from './publish-article-thunk';
+import uploadImageThunk from './upload-image-thunk';
 
 export {
   createCommentThunk,
@@ -44,4 +52,12 @@ export {
   setTopLikedThunk,
   setNewPostsThunk,
   getAllPostsThunk,
+  followTagThunk,
+  unfollowTagThunk,
+  getFollowTagsThunk,
+  getInviteCodeThunk,
+  uploadImageThunk,
+  getAllUsersThunk,
+  patchUserRolesThunk,
+  publishArticleThunk,
 };

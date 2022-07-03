@@ -16,6 +16,7 @@ import {
   LogoutIcon,
   HomeIcon,
   LoginIcon,
+  CheckIcon,
 } from './icons';
 import { getPropOnCondition, setColor } from '../services/helpers';
 import useMouseEvents from '../services/hooks/use-mouse-events';
@@ -29,7 +30,7 @@ type TBasicButtonProps = {
 };
 
 export const BasicNormalButton = styled.button<TBasicButtonProps>`
- // width: 100%;
+  //width: 100%;
   padding: 8px 16px;
   border-radius: 4px;
   border-width: 0;
@@ -51,6 +52,15 @@ export const BasicNormalButton = styled.button<TBasicButtonProps>`
     background-color: ${({ colorScheme, theme: { button }, disabled }) => getPropOnCondition(disabled, button[colorScheme].active, button[colorScheme].disabled)};
     }
   `;
+const BasicAdminButton = styled(BasicNormalButton)`
+  @media screen and (max-width:400px) {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+
+`;
 
 const BasicInvertedButton = styled.button<TBasicButtonProps>`
   padding: 8px 16px;
@@ -102,7 +112,7 @@ const MenuButton = styled.button<TBasicButtonProps>`
 export const EditPostButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
   const theme = useTheme();
   return (
-    <BasicNormalButton
+    <BasicAdminButton
       colorScheme='blue'
       disabled={disabled}
       onClick={onClick}>
@@ -112,7 +122,7 @@ export const EditPostButton : FC<TButtonProps> = ({ onClick, disabled = false })
       <RegularText size='large' weight={400} sansSerif>
         <FormattedMessage id='editArticle' />
       </RegularText>
-    </BasicNormalButton>
+    </BasicAdminButton>
   );
 };
 export const DeletePostButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
@@ -237,6 +247,14 @@ export const UnfollowButton : FC<TButtonProps> = ({ onClick, disabled = false })
   );
 };
 
+export const GenerateInviteCodeButton : FC<TButtonProps> = ({ onClick }) => (
+  <BasicNormalButton type='button' colorScheme='blue' onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='generateInviteCode' />
+    </RegularText>
+  </BasicNormalButton>
+);
+
 export const PostCommentButton : FC<TButtonProps> = ({ onClick, disabled = false }) => (
   <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
     <RegularText size='large' weight={500}>
@@ -268,6 +286,7 @@ export const UpdateProfileButton : FC<Omit<TButtonProps, 'onClick'>> = ({ disabl
     </RegularText>
   </BasicNormalButton>
 );
+
 export const PublishPostButton : FC<Omit<TButtonProps, 'onClick'>> = ({ disabled = false }) => (
   <BasicNormalButton type='submit' colorScheme='blue' disabled={disabled}>
     <RegularText size='large' weight={500}>
@@ -294,6 +313,23 @@ export const MenuSettingsButton : FC<TButtonProps> = ({ onClick, disabled = fals
         distance={iconDistance} />
       <RegularText size='large' weight={500}>
         <FormattedMessage id='settings' />
+      </RegularText>
+    </MenuButton>
+  );
+};
+
+export const MenuAdminButton : FC<TButtonProps> = ({ onClick, disabled = false }) => {
+  const theme = useTheme();
+  return (
+    <MenuButton
+      colorScheme='menu'
+      disabled={disabled}
+      onClick={onClick}>
+      <CheckIcon
+        color={theme.button.menu.font}
+        distance={iconDistance} />
+      <RegularText size='large' weight={500}>
+        <FormattedMessage id='admin' />
       </RegularText>
     </MenuButton>
   );
@@ -366,3 +402,35 @@ export const HeaderLoginButton : FC<TButtonProps> = ({ onClick, disabled = false
     </BasicNormalButton>
   );
 };
+
+export const DeclineArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicAdminButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationDecline' />
+    </RegularText>
+  </BasicAdminButton>
+);
+
+export const PublishArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicAdminButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id={disabled ? 'published' : 'moderationPublish'} />
+    </RegularText>
+  </BasicAdminButton>
+);
+
+export const HoldArticle : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicAdminButton colorScheme='red' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='moderationHold' />
+    </RegularText>
+  </BasicAdminButton>
+);
+
+export const OKButton : FC<TButtonProps> = ({ onClick, disabled = false }) => (
+  <BasicNormalButton colorScheme='blue' disabled={disabled} onClick={onClick}>
+    <RegularText size='large' weight={500}>
+      <FormattedMessage id='ok' />
+    </RegularText>
+  </BasicNormalButton>
+);

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { greySecondary, mainBgColor, popupMessage } from '../../constants/colors';
 
 type TInputFieldsetProps = {
   rowGap: number;
@@ -8,7 +9,7 @@ type TInputFieldsetProps = {
 export const FormContainer = styled.div`
   padding: 16px 0 0 0;
   max-width: 540px;
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,7 +44,7 @@ export const FormLoginLink = styled(Link)`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 98%;
 `;
 
 export const InputFieldset = styled.fieldset<TInputFieldsetProps>`
@@ -59,9 +60,61 @@ export const InputFieldset = styled.fieldset<TInputFieldsetProps>`
 export const ButtonContainer = styled.div`
   align-self: flex-end;
 `;
+export const ContainerInvite = styled.div`
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  grid-template-columns: 240px 290px;
+  align-items: center;
+  position: relative;
+  
+  @media(max-width: 600px) {
+    grid-template-columns: 240px;
+    grid-template-rows: 1fr 1fr;
+  }
+`;
 
-export const ButtonsWrapper = styled.div`
+export const MessageCopySuccess = styled.span`
+  position: absolute;
+  top: -30px;
+  left: 30%;
+  color: ${mainBgColor};
+  border-radius: 32px;
+  padding: 4px 16px;
+  background-color: ${popupMessage};
+  font-size: ${({ theme }) => theme.text16Sans.size}px;
+  font-family: ${({ theme }) => theme.text16Sans.family};
+  font-weight: ${({ theme }) => theme.text16Sans.weight};
+  line-height: ${({ theme }) => theme.text16Sans.height}px;
+`;
+
+export const ButtonsWrapper = styled.span`
   display: flex;
   flex-direction: column;
   gap: 24px
+`;
+
+export const InviteCode = styled.span`
+  font-size: ${({ theme }) => theme.text18Sans.size}px;
+  font-family: ${({ theme }) => theme.text18Sans.family};
+  font-weight: ${({ theme }) => theme.text18Sans.weight};
+  line-height: ${({ theme }) => theme.text18Sans.height}px;
+  color: ${greySecondary};
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  
+}
+ 
+`;
+export const LinkStyle = styled(Link)`
+    color: ${((props) => props.theme.markedText)};
+    text-decoration-style: dashed;
+    @media(max-width: 600px) {
+    grid-column: span 2;
+
+  }
 `;

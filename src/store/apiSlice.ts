@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TAPIError } from '../services/api.types';
+import { TAPIError, TAPIResponse } from '../services/api.types';
 
 type TAPIState = {
   successMessage: string | null,
@@ -20,7 +20,9 @@ type TAPIState = {
   isArticlePatching: boolean,
   isArticlePatchingSucceeded: boolean,
   isLikeArticlePosting: boolean,
-  isLikeArticleDeleting: boolean,
+  isLikeArticleDecline: boolean,
+  isArticlePublish: boolean,
+  isArticleDeclining: boolean,
   isTagsFetching: boolean,
   isCommentsFetching: boolean,
   isCommentPosting: boolean,
@@ -32,6 +34,15 @@ type TAPIState = {
   isSettingsPatching: boolean,
   isSettingsUpdateSucceeded: boolean,
   isAllPostsRequested: boolean,
+  isFollowTag: boolean,
+  isUnfollowTag: boolean,
+  isFollowTagsFetching: boolean,
+  isGenerateInviteCodeFetching: boolean,
+  isUploadImageFetching: boolean,
+  uploadImageRes: TAPIResponse | null,
+  isAllUsersFetching: boolean,
+  isUserRolesChange: boolean,
+  isArticleHold: boolean,
 };
 
 const initialState : TAPIState = {
@@ -53,7 +64,9 @@ const initialState : TAPIState = {
   isArticlePatching: false,
   isArticlePatchingSucceeded: false,
   isLikeArticlePosting: false,
-  isLikeArticleDeleting: false,
+  isLikeArticleDecline: false,
+  isArticlePublish: false,
+  isArticleDeclining: false,
   isTagsFetching: false,
   isCommentsFetching: false,
   isCommentPosting: false,
@@ -65,6 +78,15 @@ const initialState : TAPIState = {
   isSettingsPatching: false,
   isSettingsUpdateSucceeded: false,
   isAllPostsRequested: false,
+  isFollowTag: false,
+  isUnfollowTag: false,
+  isFollowTagsFetching: false,
+  isGenerateInviteCodeFetching: false,
+  isUploadImageFetching: false,
+  uploadImageRes: null,
+  isAllUsersFetching: false,
+  isUserRolesChange: false,
+  isArticleHold: false,
 };
 
 const apiSlice = createSlice({
@@ -236,6 +258,33 @@ const apiSlice = createSlice({
     likeArticleDeleteFailed: (state, action: PayloadAction<TAPIError>) => ({
       ...state, isLikeArticleDeleting: false, errorObject: action.payload,
     }),
+    publishArticlePostRequested: (state) => ({
+      ...state, isArticlePublish: true,
+    }),
+    publishArticlePostSucceeded: (state) => ({
+      ...state, isArticlePublish: false,
+    }),
+    publishArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticlePublish: false, errorObject: action.payload,
+    }),
+    declineArticlePostRequested: (state) => ({
+      ...state, isLikeArticleDecline: true,
+    }),
+    declineArticlePostSucceeded: (state) => ({
+      ...state, isLikeArticleDecline: false,
+    }),
+    declineArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isLikeArticleDecline: false, errorObject: action.payload,
+    }),
+    holdArticlePostRequested: (state) => ({
+      ...state, isArticleHold: true,
+    }),
+    holdArticlePostSucceeded: (state) => ({
+      ...state, isArticleHold: false,
+    }),
+    holdArticlePostFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isArticleHold: false, errorObject: action.payload,
+    }),
     tagsFetchRequested: (state) => ({
       ...state, isTagsFetching: true,
     }),
@@ -320,6 +369,72 @@ const apiSlice = createSlice({
       isSettingsUpdateSucceeded: false,
       errorObject: action.payload,
     }),
+    followTagRequested: (state) => ({
+      ...state, isFollowTag: true,
+    }),
+    followTagSucceeded: (state) => ({
+      ...state, isFollowTag: false,
+    }),
+    followTagFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isFollowTag: false, errorObject: action.payload,
+    }),
+    followTagsFetchRequested: (state) => ({
+      ...state, isFollowTagsFetching: true,
+    }),
+    followTagsFetchSucceeded: (state) => ({
+      ...state, isFollowTagsFetching: false,
+    }),
+    followTagsFetchFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isFollowTagsFetching: false, errorObject: action.payload,
+    }),
+    unfollowTagRequested: (state) => ({
+      ...state, isUnfollowTag: true,
+    }),
+    unfollowTagSucceeded: (state) => ({
+      ...state, isUnfollowTag: false,
+    }),
+    unfollowTagFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isUnfollowTag: false, errorObject: action.payload,
+    }),
+    generateInviteCodeRequested: (state) => ({
+      ...state, isGenerateInviteCodeFetching: true,
+    }),
+    generateInviteCodeSucceeded: (state) => ({
+      ...state, isGenerateInviteCodeFetching: false,
+    }),
+    generateInviteCodeFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isGenerateInviteCodeFetching: false, errorObject: action.payload,
+    }),
+    uploadImageRequested: (state) => ({
+      ...state, isUploadImageFetching: true,
+    }),
+    uploadImageSucceeded: (state, action: PayloadAction<TAPIResponse>) => ({
+      ...state, isUploadImageFetching: false, uploadImageRes: action.payload,
+    }),
+    resetUploadImageRes: (state) => ({
+      ...state, uploadImageRes: null,
+    }),
+    uploadImageFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isUploadImageFetching: false, errorObject: action.payload,
+    }),
+    allUsersRequested: (state) => ({
+      ...state, isAllUsersFetching: true,
+    }),
+    allUsersRequestSucceeded: (state) => ({
+      ...state, isAllUsersFetching: false,
+    }),
+    allUsersRequestFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isAllUsersFetching: false, errorObject: action.payload,
+    }),
+    userRolesPatchRequested: (state) => ({
+      ...state, isUserRolesChange: true,
+    }),
+    userRolesPatchSucceeded: (state) => ({
+      ...state, isUserRolesChange: false,
+    }),
+    userRolesPatchFailed: (state, action: PayloadAction<TAPIError>) => ({
+      ...state, isUserRolesChange: false, errorObject: action.payload,
+    }),
   },
 });
 
@@ -367,6 +482,15 @@ export const {
   likeArticleDeleteRequested,
   likeArticleDeleteSucceeded,
   likeArticleDeleteFailed,
+  publishArticlePostRequested,
+  publishArticlePostSucceeded,
+  publishArticlePostFailed,
+  declineArticlePostRequested,
+  declineArticlePostSucceeded,
+  declineArticlePostFailed,
+  holdArticlePostRequested,
+  holdArticlePostSucceeded,
+  holdArticlePostFailed,
   tagsFetchRequested,
   tagsFetchSucceeded,
   tagsFetchFailed,
@@ -402,5 +526,27 @@ export const {
   articleDeleteClear,
   articlePatchClear,
   articlePostClear,
+  followTagRequested,
+  followTagSucceeded,
+  followTagFailed,
+  followTagsFetchRequested,
+  followTagsFetchSucceeded,
+  followTagsFetchFailed,
+  unfollowTagRequested,
+  unfollowTagSucceeded,
+  unfollowTagFailed,
+  generateInviteCodeFailed,
+  generateInviteCodeSucceeded,
+  generateInviteCodeRequested,
+  uploadImageRequested,
+  uploadImageSucceeded,
+  uploadImageFailed,
+  resetUploadImageRes,
+  allUsersRequested,
+  allUsersRequestSucceeded,
+  allUsersRequestFailed,
+  userRolesPatchRequested,
+  userRolesPatchSucceeded,
+  userRolesPatchFailed,
 } = apiSlice.actions;
 export default apiReducer;

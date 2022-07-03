@@ -10,6 +10,7 @@ import { deleteFollowProfile } from '../services/api';
 import { AppThunk } from '../store/store.types';
 import { TAPIProfile, TAPIError } from '../services/api.types';
 import { makeErrorObject } from '../services/helpers';
+import getPrivateFeedThunk from './get-private-feed-thunk';
 
 const unfollowProfileThunk: AppThunk = () => async (dispatch, getState) => {
   const { profile } = getState().view;
@@ -20,6 +21,7 @@ const unfollowProfileThunk: AppThunk = () => async (dispatch, getState) => {
     batch(() => {
       dispatch(setViewProfile(data.profile));
       dispatch(followProfileDeleteSucceeded());
+      dispatch(getPrivateFeedThunk());
     });
   } catch (error) {
     dispatch(followProfileDeleteFailed(makeErrorObject(error as AxiosError<TAPIError>)));

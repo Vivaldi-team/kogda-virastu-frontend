@@ -3,10 +3,12 @@ import {
 } from '../types/types';
 
 export type TAPINewUser = {
+  invite: string,
   user: {
     username: string;
     email: string;
     password: string;
+    invite: string;
     nickname?: string;
   }
 };
@@ -14,11 +16,13 @@ export type TAPINewUser = {
 export type TAPIAuth = {
   user: {
     email: string;
+    roles?: string[];
     username: string;
     bio?: string;
     image?: string;
     token: string;
-    nickname: string
+    nickname: string,
+    invite: string,
   };
 };
 
@@ -33,8 +37,13 @@ export type TAPIUser = {
   user: TUser;
 };
 
+export type TAPIUsers = {
+  users: Array<TUser>,
+};
+
 export type TAPIPatchUserData = {
   email?: string;
+  roles?: string[];
   username?: string;
   bio?: string;
   image?: string;
@@ -75,6 +84,14 @@ export type TAPITags = {
   tags: TTags;
 };
 
+export type TAPITag = {
+  tag: string;
+};
+
+export type TAPIInvite = {
+  code: string;
+};
+
 export type TAPIComment = {
   comment: TComment;
 };
@@ -92,4 +109,10 @@ export type TAPIErrors = {
 export type TAPIError = {
   errors: TAPIErrors;
   statusCode: number;
+};
+
+export type TAPIResponse = {
+  data: {
+    url: string,
+  }
 };

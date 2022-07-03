@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  FeedTypes, TArticle, TArticles, TComment, TComments, TProfile, TTags, UserArticlesTypes,
+  FeedTypes,
+  TArticle,
+  TArticles,
+  TComment,
+  TComments,
+  TProfile,
+  TTags,
+  UserArticlesTypes,
 } from '../types/types';
 
 type TViewState = {
   feed: TArticles | null;
+  privateFeed: TArticles | null;
   feedCount: number;
   article: TArticle | null;
   tagsList: TTags | null;
   selectedTags: TTags | null;
+  followTags: TTags | null;
   tag: string | null,
   commentsFeed: TComments | null;
   comment: TComment | null;
@@ -19,14 +28,18 @@ type TViewState = {
   feedType: FeedTypes;
   articlesType: UserArticlesTypes;
   topFeed: TArticles | null;
+  generatedCode: string | null;
+  copyGeneratedCode: boolean;
 };
 
 const initialState: TViewState = {
   feed: null,
+  privateFeed: null,
   feedCount: 0,
   article: null,
   tagsList: null,
   selectedTags: null,
+  followTags: null,
   tag: null,
   commentsFeed: null,
   comment: null,
@@ -36,6 +49,8 @@ const initialState: TViewState = {
   feedType: FeedTypes.public,
   articlesType: UserArticlesTypes.my,
   topFeed: null,
+  generatedCode: null,
+  copyGeneratedCode: false,
 };
 
 const viewSlice = createSlice({
@@ -44,6 +59,9 @@ const viewSlice = createSlice({
   reducers: {
     setViewFeed: (state, action: PayloadAction<TArticles>) => ({
       ...state, feed: action.payload,
+    }),
+    setViewPrivateFeed: (state, action: PayloadAction<TArticles>) => ({
+      ...state, privateFeed: action.payload,
     }),
     clearViewFeed: (state) => ({
       ...state, feed: null,
@@ -71,6 +89,9 @@ const viewSlice = createSlice({
     }),
     setSelectedTags: (state, action: PayloadAction<TTags>) => ({
       ...state, selectedTags: action.payload,
+    }),
+    setFollowTags: (state, action: PayloadAction<TTags>) => ({
+      ...state, followTags: action.payload,
     }),
     clearSelectedTags: (state) => ({
       ...state, selectedTags: null,
@@ -117,12 +138,19 @@ const viewSlice = createSlice({
     setArtistProfile: (state, action: PayloadAction<UserArticlesTypes>) => ({
       ...state, articlesType: action.payload,
     }),
+    setGeneratedInviteCode: (state, action: PayloadAction<string>) => ({
+      ...state, generatedCode: action.payload,
+    }),
+    copyGeneratedInviteCode: (state) => ({
+      ...state, copyGeneratedCode: !state.copyGeneratedCode,
+    }),
   },
 });
 
 export const {
   clearPage,
   setViewFeed,
+  setViewPrivateFeed,
   clearViewFeed,
   setFeedCount,
   setViewTags,
@@ -130,6 +158,7 @@ export const {
   setViewArticle,
   clearViewArticle,
   setSelectedTags,
+  setFollowTags,
   clearSelectedTags,
   setViewCommentsFeed,
   clearViewCommentsFeed,
@@ -146,6 +175,8 @@ export const {
   setArtistProfile,
   setTopFeed,
   clearTopFeed,
+  setGeneratedInviteCode,
+  copyGeneratedInviteCode,
 } = viewSlice.actions;
 const viewReducer = viewSlice.reducer;
 export default viewReducer;

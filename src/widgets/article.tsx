@@ -1,15 +1,20 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { FormattedDate } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import {
   addLikeThunk, deleteLikeThunk,
+  followTagThunk, publishArticleThunk, unfollowTagThunk,
 } from '../thunks';
 import { DeletePostButton, EditPostButton } from '../ui-lib';
 import { openConfirm } from '../store';
 import BarTags from './bar-tags';
 import Likes from './likes';
+import { DeclineArticle, HoldArticle, PublishArticle } from '../ui-lib/buttons';
+import declineArticleThunk from '../thunks/decline-article-thunk';
+import holdArticleThunk from '../thunks/hold-article-thunk';
 
 type TArticleProps = {
   slug: string;
@@ -45,12 +50,12 @@ const ArticleActionsContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  && > button {
-    width:233px;
-    @media screen  and (max-width:725px) {
-      width:175px;
-    }
-  }
+  //&& > button {
+  //  width:233px;
+  //  @media screen  and (max-width:725px) {
+  //    width:175px;
+  //  }
+  //}
 `;
 
 const ArticleAuthor = styled.p`
@@ -89,7 +94,7 @@ const ArticleImage = styled.img`
   height: 100%;
 `;
 
-const ArticleBody = styled.p`
+const ArticleBody = styled.div`
   font-family: ${({ theme: { text18: { family } } }) => family};
   font-size: ${({ theme: { text18: { size } } }) => size}px ;
   line-height: ${({ theme: { text18: { height } } }) => height}px;
@@ -117,7 +122,7 @@ const Article: FC<TArticleProps> = ({ slug }) => {
   const { article } = useSelector((state) => state.view);
   const currentUser = useSelector((state) => state.profile);
   const isAuthor = article?.author.username === currentUser.username;
-
+  const isAdmin = true;
   const onClickDelete = () => {
     if (article) {
       dispatch(openConfirm());
@@ -139,11 +144,46 @@ const Article: FC<TArticleProps> = ({ slug }) => {
     }
   };
 
+  const { isLoggedIn } = useSelector((state) => state.system);
+  const { followTags } = useSelector((state) => state.view);
+  const handleClickFollow = (evt:React.MouseEvent, tag: string) => {
+    evt.preventDefault();
+    if (followTags && isLoggedIn && followTags.includes(tag)) {
+      dispatch(unfollowTagThunk(tag));
+    } else if (isLoggedIn) {
+      dispatch(followTagThunk(tag));
+    }
+  };
+
   if (!article) {
     return null;
   }
+
   return (
     <ArticleContainer>
+      {isAdmin && (article.state !== 'declined') && (
+      <ArticleActionsContainer>
+        <PublishArticle
+          onClick={() => {
+            dispatch(publishArticleThunk(article.slug));
+          }}
+          disabled={article.state === 'published'} />
+        {article.state === 'pending'
+          ? (
+            <DeclineArticle
+              onClick={() => {
+                dispatch(declineArticleThunk(article.slug));
+              }}
+              disabled={false} />
+          ) : (
+            <HoldArticle
+              onClick={() => {
+                dispatch(holdArticleThunk(article.slug));
+              }}
+              disabled={false} />
+          )}
+      </ArticleActionsContainer>
+      )}
       {isAuthor && (
         <ArticleActions onClickDelete={onClickDelete} onClickEdit={onClickEdit} />
       )}
@@ -168,8 +208,8 @@ const Article: FC<TArticleProps> = ({ slug }) => {
       {article.link && (
         <ArticleImage src={article.link} />
       )}
-      <ArticleBody>{article.body}</ArticleBody>
-      <BarTags tagList={article.tagList} />
+      <ArticleBody>{parse(article.body)}</ArticleBody>
+      <BarTags tagList={article.tagList} handleClick={handleClickFollow} />
     </ArticleContainer>
   );
 };

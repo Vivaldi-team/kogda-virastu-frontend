@@ -6,7 +6,7 @@ import {
   privateFeedRequested,
   privateFeedSucceeded,
   setFeedCount,
-  setViewFeed,
+  setViewPrivateFeed,
 } from '../store';
 import { AppThunk } from '../store/store.types';
 import { makeErrorObject } from '../services/helpers';
@@ -22,7 +22,7 @@ const getPrivateFeedThunk: AppThunk = (
     const
       { data: { articles, articlesCount } } = await fetchPrivateFeed(params);
     batch(() => {
-      dispatch(setViewFeed(articles));
+      dispatch(setViewPrivateFeed(articles));
       dispatch(setFeedCount(articlesCount));
       dispatch(privateFeedSucceeded());
     });

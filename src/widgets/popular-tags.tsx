@@ -27,7 +27,7 @@ const TagList = styled.div`
 const PopularTags: FC = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector((state) => state.all);
-  const { selectedTags } = useSelector((state) => state.view);
+  const { selectedTags, followTags } = useSelector((state) => state.view);
 
   const handleClick = (ev:React.MouseEvent, tag: string) => {
     ev.preventDefault();
@@ -58,6 +58,7 @@ const PopularTags: FC = () => {
                 pointer
                 handleClick={handleClick}
                 isActive={selectedTags?.includes(tag) || false}
+                isFollowing={followTags?.includes(tag) || false}
                 deactivateTag={(e) => deactivateTag(e, tag)} />
             ))
           }

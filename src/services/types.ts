@@ -1,3 +1,5 @@
+import {MouseEventHandler} from "react";
+
 export type TUser = {
   email: string;
   username: string;

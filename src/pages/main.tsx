@@ -9,10 +9,12 @@ import TopAnnounceWidget from '../widgets/top-announce-widget';
 import PopularTags from '../widgets/popular-tags';
 import { useSelector, useDispatch } from '../services/hooks';
 import {
-  setTopLikedThunk, setNewPostsThunk, getPublicFeedThunk,
+  setTopLikedThunk, setNewPostsThunk, getPublicFeedThunk, getPrivateFeedThunk,
 } from '../thunks';
 import { FeedRibbon, Slider } from '../widgets';
 import { desktopBreakpoint, mobileViewThreshold, tabletBreakpoint } from '../constants';
+import { settingsResetUpdateSucceeded } from '../store';
+import Preloader from '../widgets/preloader';
 
 const desktopToTabletGapStep = (80 - 40) / (desktopBreakpoint - tabletBreakpoint);
 const tabletToMobileGapStep = (40 - 20) / (tabletBreakpoint - mobileViewThreshold);
@@ -34,6 +36,7 @@ const MainContainer = styled.div`
     max-width:1140px;
     position: relative;
     z-index: 10;
+    width: 100%;
 
     @media screen and (max-width:${tabletBreakpoint}px) {
       padding: 0 24px;
@@ -56,7 +59,8 @@ const MainContainer = styled.div`
   }
 `;
 const LeftColumn = styled.div`
-overflow: hidden;
+  overflow: hidden;
+  min-width: 65%;
 `;
 
 const RightColumn = styled.aside`
@@ -77,14 +81,18 @@ const RightColumn = styled.aside`
     }
   }
 `;
-const Main : FC = () => {
+const Main: FC = () => {
+  const posts = useSelector((state) => state.view.feed);
   const dispatch = useDispatch();
   const intl = useIntl();
   const { articles } = useSelector((state) => state.all);
+  window.scrollTo(0, 0);
   useEffect(() => {
     batch(() => {
       dispatch(getPublicFeedThunk());
+      dispatch(getPrivateFeedThunk());
       dispatch(setNewPostsThunk());
+      dispatch(settingsResetUpdateSucceeded());
     });
   }, [dispatch]);
 
@@ -96,14 +104,20 @@ const Main : FC = () => {
   return (
     <MainSection>
       <MainContainer>
-        <LeftColumn>
-          <FeedRibbon />
-        </LeftColumn>
-        <RightColumn>
-          <PopularTags />
-          <TopAnnounceWidget caption={intl.messages.popularContent as string} />
-          <Slider />
-        </RightColumn>
+        { posts === null
+          ? <Preloader color='rgba(255, 198, 0, 1)' />
+          : (
+            <>
+              <LeftColumn>
+                <FeedRibbon />
+              </LeftColumn>
+              <RightColumn>
+                <PopularTags />
+                <TopAnnounceWidget caption={intl.messages.popularContent as string} />
+                <Slider />
+              </RightColumn>
+            </>
+          )}
       </MainContainer>
     </MainSection>
   );

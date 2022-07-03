@@ -12,7 +12,6 @@ const Ribbon = styled.section`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
   height: 100%;
   margin-block-start: 0;
   margin-block-end: 0;

@@ -3,24 +3,31 @@ import React, { FC, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import parse from 'html-react-parser';
 import AuthorHeadingWidget from './author-heading-widget';
 import { TArticle } from '../types/types';
 import BarTags from './bar-tags';
-import { Divider } from '../ui-lib';
 import { getPropOnCondition } from '../services/helpers';
+import { DeclineArticle, PublishArticle } from '../ui-lib/buttons';
 
 const ArticleCardContainer = styled.div`
-    width: 700px;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
 
     @media screen and (max-width: 1050px) {
-        width: 453px;
+        
     }
-
+    @media screen and (min-width: 769px) {
+        padding-left: 20px;
+    }
     @media screen and (max-width: 600px) {
         width: 280px;
+        padding-right: 0;
     }
 
    /*  @media screen and (max-width:320px) {
@@ -30,13 +37,13 @@ const ArticleCardContainer = styled.div`
 
 const ArticleName = styled.h2`
     width:100%;
-    grid-column: 1/3;
     font-size: ${({ theme: { secondLevelHeading: { size } } }) => `${size}px`} ;
     font-family: ${({ theme: { secondLevelHeading: { family } } }) => family};
     line-height: ${({ theme: { secondLevelHeading: { height } } }) => `${height}px`} ;
     font-weight: ${({ theme: { secondLevelHeading: { weight } } }) => weight};
     color: ${({ theme: { primaryText } }) => primaryText};
     word-break:break-all;
+    margin: 0;
  @media screen and (max-width: 768px) {
         font-size: ${({ theme: { secondLevelHeadingMobile: { size } } }) => `${size}px`} ;
         font-family: ${({ theme: { secondLevelHeadingMobile: { family } } }) => family};
@@ -62,8 +69,9 @@ const BarTagsWrapper = styled.div<TElementWithImage>`
 `;
 
 const ContentContainer = styled.div<TElementWithImage>`
-    display: grid;
-    grid-template-columns: 1fr 6fr;
+    display: flex;
+    flex-direction: column;
+    //grid-template-columns: 1fr 6fr;
     grid-gap: 16px;
     .link {
         font-size: ${({ theme: { text18Sans: { size } } }) => `${size}px`} ;
@@ -92,12 +100,26 @@ const ContentContainer = styled.div<TElementWithImage>`
 `;
 
 const ArticleImage = styled.img`
-width: 159px;
-height: 85px;
-@media screen and (max-width: 320px) {
-    width: 280px;
+    max-width: 100%;
     height: 150px;
-}
+    object-fit: cover;
+    
+    @media screen and (max-width: 320px) {
+        width: 280px;
+        height: 150px;
+    }
+`;
+
+const ArticleActionsContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 32px;
+  @media screen and (max-width: 320px) {
+    width: 262px;
+    flex-flow: row nowrap;
+    gap: 14px;
+  }
+  }
 `;
 
 const Article = styled.article<TElementWithImage>`
@@ -130,10 +152,14 @@ box-orient: vertical;
 type TArticleFullPreview = {
   article: TArticle,
   onLikeClick: MouseEventHandler,
+  declineArticle: MouseEventHandler,
+  publishArticle: MouseEventHandler,
+  isModeration: boolean,
 };
 
-const ArticleFullPreview: FC<TArticleFullPreview> = ({ article, onLikeClick }) => (
-
+const ArticleFullPreview: FC<TArticleFullPreview> = ({
+  article, onLikeClick, declineArticle, publishArticle, isModeration = false,
+}) => (
   <ArticleCardContainer>
     <AuthorHeadingWidget
       username={article.author?.username}
@@ -146,18 +172,23 @@ const ArticleFullPreview: FC<TArticleFullPreview> = ({ article, onLikeClick }) =
     <ContentContainer image={article.link}>
       <ArticleName>{article.title}</ArticleName>
       {article.link && <ArticleImage src={article.link} />}
-      <Article image={article.link}>{article.body}</Article>
-      <Link className='link' to={`/article/${article.slug}`}>
-        <FormattedMessage id='articleEnter' />
-      </Link>
+      <Article image={article.link}>{parse(article.body)}</Article>
       <BarTagsWrapper image={article.link}>
         <BarTags
           isHasImage={!!article.link}
           rowReverse
           tagList={article.tagList} />
       </BarTagsWrapper>
+      <Link className='link' to={`/article/${article.slug}`}>
+        <FormattedMessage id='articleEnter' />
+      </Link>
     </ContentContainer>
-    <Divider distance={0} />
+    {isModeration && (
+      <ArticleActionsContainer>
+        <PublishArticle onClick={publishArticle} />
+        <DeclineArticle onClick={declineArticle} />
+      </ArticleActionsContainer>
+    )}
   </ArticleCardContainer>
 );
 

@@ -8,6 +8,7 @@ type TProfileFormState = {
   bio: string | null;
   image: string | null;
   password: string | null;
+  confirmpassword: string | null;
 };
 
 const initialState: TProfileFormState = {
@@ -17,6 +18,7 @@ const initialState: TProfileFormState = {
   bio: null,
   image: null,
   password: null,
+  confirmpassword: null,
 };
 
 const profileSubSlice = createSlice({
@@ -35,11 +37,14 @@ const profileSubSlice = createSlice({
     setBioProfile: (state, action: PayloadAction<string>) => ({
       ...state, bio: action.payload,
     }),
-    setImageProfile: (state, action: PayloadAction<string>) => ({
+    setImageURLProfile: (state, action: PayloadAction<string>) => ({
       ...state, image: action.payload,
     }),
     setPasswordProfile: (state, action: PayloadAction<string>) => ({
       ...state, password: action.payload,
+    }),
+    ConfirmPasswordProfile: (state, action: PayloadAction<string>) => ({
+      ...state, confirmpassword: action.payload,
     }),
     setFormProfile: (state, action: PayloadAction<TUser>) => ({
       ...state, ...action.payload,
@@ -56,8 +61,9 @@ export const {
   setNicknameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
+  setImageURLProfile,
   setPasswordProfile,
+  ConfirmPasswordProfile,
   setFormProfile,
   resetFormProfile,
 } = profileSubSlice.actions;

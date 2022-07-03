@@ -1,29 +1,39 @@
 import React, {
-  ChangeEventHandler, FC, FormEventHandler, useEffect,
+  ChangeEventHandler,
+  FC,
+  FormEventHandler,
+  MouseEvent,
+  useEffect,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from 'styled-components';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from '../../services/hooks';
 
 import {
   setUsernameProfile,
   setEmailProfile,
   setBioProfile,
-  setImageProfile,
   setNicknameProfile,
   setFormProfile,
   setPasswordProfile,
+  ConfirmPasswordProfile,
+  copyGeneratedInviteCode,
 } from '../../store';
 
-import { patchCurrentUserThunk } from '../../thunks';
+import {
+  patchCurrentUserThunk,
+  getInviteCodeThunk,
+  uploadImageThunk,
+} from '../../thunks';
 
 import {
-  ButtonContainer,
+  ButtonContainer, ContainerInvite,
   Form,
   FormContainer,
   FormTitle,
   InputFieldset,
+  LinkStyle, MessageCopySuccess,
 } from './forms-styles';
 
 import {
@@ -31,23 +41,31 @@ import {
   FieldLogin,
   FieldNick,
   FieldPassword,
+  FieldConfirmPassword,
   FieldProfileImage,
   UpdateProfileButton,
   FieldAboutUser,
+  GenerateInviteCodeButton,
 } from '../../ui-lib';
+
+import FollowTags from '../follow-tags';
+import { greySecondary } from '../../constants/colors';
 
 const SettingsForm: FC = () => {
   const {
-    bio, email, image, username, password, nickname,
+    bio, email, username, password, nickname, confirmpassword,
   } = useSelector((state) => state.forms.profile);
 
   const profile = useSelector((state) => state.profile);
 
   const { isSettingsPatching, isSettingsUpdateSucceeded } = useSelector((state) => state.api);
 
+  const { generatedCode, copyGeneratedCode } = useSelector((state) => state.view);
+
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
+  const intl = useIntl();
 
   useEffect(() => {
     dispatch(setFormProfile({
@@ -64,15 +82,22 @@ const SettingsForm: FC = () => {
       navigate('/');
     }
   //  return () => { dispatch(settingsResetUpdateSucceeded()); };
-  }, [dispatch, isSettingsUpdateSucceeded, navigate]);
+  }, [isSettingsUpdateSucceeded, navigate]);
 
   const submitForm : FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
-    dispatch(patchCurrentUserThunk());
+    if (password === confirmpassword
+      || ((password === '' || password === null) && (confirmpassword === '' || confirmpassword === null))) {
+      dispatch(patchCurrentUserThunk());
+    }
   };
 
   const changeImage : ChangeEventHandler<HTMLInputElement> = (evt) => {
-    dispatch(setImageProfile(evt.target.value));
+    if (evt.target.files) {
+      const formData = new FormData();
+      formData.append('file', evt.target.files[0]);
+      dispatch(uploadImageThunk(formData, 'profile'));
+    }
   };
 
   const changeUsername : ChangeEventHandler<HTMLInputElement> = (evt) => {
@@ -89,8 +114,18 @@ const SettingsForm: FC = () => {
   const changeNickname : ChangeEventHandler<HTMLInputElement> = (evt) => {
     dispatch(setNicknameProfile(evt.target.value));
   };
+  const ConfirmChangePassword : ChangeEventHandler<HTMLInputElement> = (evt) => {
+    dispatch(ConfirmPasswordProfile(evt.target.value));
+  };
   const changePassword : ChangeEventHandler<HTMLInputElement> = (evt) => {
     dispatch(setPasswordProfile(evt.target.value));
+  };
+  const copyToClipBoard = (e: MouseEvent<HTMLElement>, text: string) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(text)
+      .then(() => setTimeout(() => dispatch(copyGeneratedInviteCode()), 2000))
+      .finally(() => dispatch(copyGeneratedInviteCode()))
+      .catch((evt: string) => evt);
   };
 
   return (
@@ -100,7 +135,7 @@ const SettingsForm: FC = () => {
       </FormTitle>
       <Form onSubmit={submitForm}>
         <InputFieldset rowGap={16}>
-          <FieldProfileImage value={image ?? ''} onChange={changeImage} />
+          <FieldProfileImage onChange={changeImage} />
           <FieldLogin value={username ?? ''} onChange={changeUsername} />
           <FieldNick value={nickname ?? ''} onChange={changeNickname} />
           <FieldAboutUser
@@ -108,14 +143,36 @@ const SettingsForm: FC = () => {
             value={bio ?? ''}
             minHeight={theme.text18.height * 5} />
           <FieldEmail value={email ?? ''} onChange={changeEmail} />
-          <FieldPassword value={password ?? ''} onChange={changePassword} />
+          <FieldPassword label={intl.messages.newPassword as string} value={password ?? ''} onChange={changePassword} />
+          <FieldConfirmPassword value={confirmpassword ?? ''} onChange={ConfirmChangePassword} />
         </InputFieldset>
+        <ContainerInvite>
+          <GenerateInviteCodeButton onClick={() => dispatch(getInviteCodeThunk())} />
+          {generatedCode ? (
+            <>
+              {copyGeneratedCode
+                ? (
+                  <MessageCopySuccess>
+                    <FormattedMessage id='copyTextSuccess' />
+                  </MessageCopySuccess>
+                )
+                : null}
+              <LinkStyle
+                onClick={(e: MouseEvent<HTMLElement>) => copyToClipBoard(e, `${window.location.origin}/registration?=${generatedCode}`)}
+                to={`/registration?=${generatedCode}`}
+                color={greySecondary}>
+                <FormattedMessage id='copyText' />
+              </LinkStyle>
+            </>
+          )
+            : null}
+        </ContainerInvite>
+        <FollowTags />
         <ButtonContainer>
           <UpdateProfileButton disabled={isSettingsPatching} />
         </ButtonContainer>
       </Form>
     </FormContainer>
-
   );
 };
 

@@ -31,7 +31,8 @@
 * Реализован редизайн.
 
 ## Бэкэнд
-Бэкенд для локального запуска проекта: ссылки на [репозиторий бэкенда на Express](https://github.com/yandex-praktikum/kogda-virastu-backend) и на [Контейнер в Docker](https://github.com/yandex-praktikum/kogda-virastu-backend/blob/main/Dockerfile).
+Бэкенд для локального запуска проекта: [Контейнер в Docker](https://github.com/yandex-praktikum/kogda-virastu-backend).
+
 
 ## Развертывание фронтэнда:
 * Создайте локальную директорию для проекта
@@ -39,7 +40,7 @@
 * Перейдите в созданную директорию
 `cd dev`
 * Клонируйте репозиторий в созданную директорию
-`git clone https://github.com/yandex-praktikum/kogda-virastu-frontend.git`
+`git clone https://github.com/yandex-praktikum/kogda-virastu-frontend`
 * Откройте проект в любом редакторе кода
 * Выполните `npm install && npm start` в терминале, находясь в папке проекта.
 

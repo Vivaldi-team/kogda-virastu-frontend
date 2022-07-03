@@ -1,10 +1,14 @@
 export type TUser = {
   email: string;
+  roles?: string[];
   username: string;
   bio?: string;
   image?:string;
   nickname?: string;
+  invite?: string;
 };
+
+export type TUsers = Array<TUser>;
 
 // Исправлено и переименовано по модели данных сервера
 export type TProfile = {
@@ -30,6 +34,8 @@ export type TArticle = {
   tagList: TTags;
   title: string;
   updatedAt: string;
+  privatePosts?: string;
+  state?: string;
 };
 
 export type TArticleCore = Omit<TArticle,
@@ -59,5 +65,11 @@ export enum FeedTypes {
 export enum UserArticlesTypes {
   my = 'my',
   favorite = 'favorite',
-
 }
+export type TInvite = {
+  code: string;
+};
+
+export type TCompare = {
+  (a: TArticle, b: TArticle): number;
+};

@@ -3,8 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { batch } from 'react-redux';
 import { useDispatch, useSelector } from '../services/hooks';
 
-import { ProfileWidget, FeedRibbon } from '../widgets';
+import { ProfileWidget, ProfileFeed } from '../widgets';
 import {
+  getPrivateFeedThunk,
   getPublicFeedThunk,
   getUserProfileThunk,
 } from '../thunks';
@@ -50,6 +51,7 @@ const Profile: FC = () => {
   useEffect(() => {
     if (!!profile.username && !!totalCount) {
       dispatch(getPublicFeedThunk({ limit: totalCount ?? 20, author: username }));
+      dispatch(getPrivateFeedThunk());
     }
   }, [dispatch, username, totalCount, profile.username]);
 
@@ -70,12 +72,12 @@ const Profile: FC = () => {
         userName={profile.nickname ?? profile.username}
         isFollow={profile.following}
         userImage={profile.image}
+        userBio={profile.bio}
         isUser={isUser}
         size='large'
         distance={0}
         color='' />
-      <FeedRibbon />
-
+      <ProfileFeed />
     </ProfilePageLayout>
 
   );
